@@ -1,11 +1,14 @@
+from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap, QPalette
 from PyQt5.QtWidgets import *
-from PyQt5 import QtWidgets,QtCore
-from window import *
-class teacherWindow(window):
+
+import window
+
+
+class teacherWindow(window.window):
     def __init__(self, width=1366, height=768):
-        window.__init__(self, width, height)
+        window.window.__init__(self, width, height)
         clientTeacherLayout=QHBoxLayout()
         #1总布局
         studentDataLayout=self.studentData()
@@ -18,7 +21,7 @@ class teacherWindow(window):
         #加入1.2
         self.setLayout(clientTeacherLayout)
         #设置总布局
-        self.showFullScreen()
+        # self.showFullScreen()
         #全屏
     def gradeData(self):
         """
@@ -27,7 +30,7 @@ class teacherWindow(window):
         """
         gradeListLayout=QVBoxLayout()
         #1.2右侧布局
-        text = QLabel("科目成绩")
+        text = QLabel("学生列表")
         # 1.2.1右侧布局标题
         text.setAlignment(Qt.AlignCenter)
         # 文字居中
@@ -39,17 +42,27 @@ class teacherWindow(window):
         # 设置背景
         gradeListLayout.addWidget(text)
         #加入1.2.1
-        gradeList = QTableWidget()
+        self.gradeList = QTableWidget()
         #1.2.2表格
-        gradeList.setRowCount(50)
-        gradeList.setColumnCount(3)
+        self.buttonList=[]
+        self.gradeList.setRowCount(15)
+        self.gradeList.setColumnCount(3)
         #行列数
-        gradeList.setHorizontalHeaderLabels(['学期', '课程名称', '成绩'])
+        self.gradeList.setHorizontalHeaderLabels(['班级', '姓名',"详细信息"])
         #表格字段
-        gradeList.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        gradeList.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.gradeList.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.gradeList.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        for i in range(15):
+            button=QPushButton("显示")
+            button.setDown(True)
+            button.setStyleSheet('QPushButton{margin:5px}')
+            button.setEnabled(False)
+            self.buttonList.append(button)
+            # button.setFixedHeight(30)
+            # button.setFixedWidth(90)
+            self.gradeList.setCellWidget(i,2,button)
         #水平竖直自适应延申
-        gradeListLayout.addWidget(gradeList)
+        gradeListLayout.addWidget(self.gradeList)
         #加入1.2.2
         return gradeListLayout
     def studentData(self):
@@ -120,24 +133,24 @@ class teacherWindow(window):
         majorlabel.setFixedWidth(200)
         majorlabel.setFrameShape(QtWidgets.QFrame.Box)
         majorlabel.setPalette(palettenew)
-        num=QLineEdit()
-        num.setReadOnly(True)
-        name=QLineEdit()
-        name.setReadOnly(True)
-        id=QLineEdit()
-        id.setReadOnly(True)
-        year=QLineEdit()
-        year.setReadOnly(True)
-        inclass=QLineEdit()
-        inclass.setReadOnly(True)
-        major=QLineEdit()
-        major.setReadOnly(True)
-        studentDataList.addRow(numlabel,num)
-        studentDataList.addRow(namelabel, name)
-        studentDataList.addRow(idlabel, id)
-        studentDataList.addRow(yearlabel, year)
-        studentDataList.addRow(inclasslabel, inclass)
-        studentDataList.addRow(majorlabel, major)
+        self.num=QLineEdit()
+        self.num.setReadOnly(True)
+        self.name=QLineEdit()
+        self.name.setReadOnly(True)
+        self.id=QLineEdit()
+        self.id.setReadOnly(True)
+        self.year=QLineEdit()
+        self.year.setReadOnly(True)
+        self.inclass=QLineEdit()
+        self.inclass.setReadOnly(True)
+        self.major=QLineEdit()
+        self.major.setReadOnly(True)
+        studentDataList.addRow(numlabel,self.num)
+        studentDataList.addRow(namelabel, self.name)
+        studentDataList.addRow(idlabel, self.id)
+        studentDataList.addRow(yearlabel, self.year)
+        studentDataList.addRow(inclasslabel, self.inclass)
+        studentDataList.addRow(majorlabel, self.major)
 
 
         studentDataLayoutUp.addLayout(studentDataList)
@@ -147,18 +160,44 @@ class teacherWindow(window):
 
         studentDataLayoutDown = QHBoxLayout()
         # 1.1.3下方布局
-        otherData=QLabel("")
+        self.otherData=QTableWidget()
         #1.1.3.1
-        otherData.setAutoFillBackground(True)
-        otherData.setFrameShadow(QtWidgets.QFrame.Raised)
-        palettedown = QPalette()
-        palettedown.setColor(QPalette.Window, Qt.white)
-        otherData.setPalette(palettedown)
-        #设置背景
-        otherData.setFixedWidth(700)
-        otherData.setFixedHeight(450)
-        studentDataLayoutDown.addWidget(otherData)
+        self.otherData.setRowCount(8)
+        self.otherData.setColumnCount(1)
+        # 行列数
+        self.otherData.setVerticalHeaderLabels(['原学院', '地区', '宿舍楼','宿舍号','性质','手机号','家长电话','家庭住址'])
+        # 表格字段
+        self.otherData.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.otherData.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        # 水平竖直自适应延申
+        self.otherData.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        #竖直滚动条
+        self.otherData.horizontalHeader().setVisible(False)
+        # 隐藏列号
+        studentDataLayoutDown.addWidget(self.otherData)
         #加入1.1.3.1
         studentDataLayout.addLayout(studentDataLayoutDown)
         #加入1.1.3
+
         return  studentDataLayout
+
+
+
+    def visitorShow(self,visitorList):
+        for index in range(len(visitorList)):
+            self.gradeList.setItem(index,0,QTableWidgetItem(visitorList[index]["num"]))
+            self.gradeList.setItem(index,1,QTableWidgetItem(visitorList[index]["name"]))
+            self.buttonList[index].setEnabled(True)
+        self.buttonList[0].clicked.connect(lambda :self.detailShow(visitorList[0]))
+        self.buttonList[1].clicked.connect(lambda :self.detailShow(visitorList[1]))
+
+
+
+    def detailShow(self,studentData):
+        self.name.setText(str(studentData["name"]))
+        self.num.setText(str(studentData["num"]))
+        #self.inclass.setText(studentData["inclass"])
+        # self.major.setPlainText(studentData["major"])
+        # self.year.setPlainText(studentData["year"])
+        # self.id.setPlainText(studentData["id"])
+        # self.otherData.setItem(0,0,studentData[""])

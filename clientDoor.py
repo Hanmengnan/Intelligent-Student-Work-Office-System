@@ -8,33 +8,46 @@ class doorWindow(window):
         window.__init__(self,width,height)
         self.doorWindowLayout=PyQt5.QtWidgets.QVBoxLayout()
         #总布局1
-        table=QTableWidget()
+        self.tabel=QTableWidget()
         #1.1列表
-        table.setRowCount(4)
-        table.setColumnCount(4)
+        self.tabel.setRowCount(3)
+        self.tabel.setColumnCount(3)
         #四行四列
-        table.setHorizontalHeaderLabels(['照片', '姓名', '学号','来访时间'])
+        self.tabel.setHorizontalHeaderLabels(['照片', '姓名', '备注信息'])
         #标题字段
-        table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.tabel.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         #水平自由伸缩
-        table.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.tabel.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
         #竖直自由伸缩
-        table.verticalHeader().setVisible(False)
-        #不可编辑
-        table.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeToContents)
-        #第一列自适应宽度
+        self.tabel.verticalHeader().setVisible(False)
+        #隐藏行号
+        self.tabel.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeToContents)
+        #第一列自适应
         for i in range(4):
             img=QLabel()
             per=QPixmap('per.jpg')
             img.setPixmap(per)
-            table.setCellWidget(i,0,img)
-        self.doorWindowLayout.addWidget(table)
+            self.tabel.setCellWidget(i,0,img)
+        self.doorWindowLayout.addWidget(self.tabel)
         # 加入1.1
         self.setLayout(self.doorWindowLayout)
         #设置总布局
-        self.showFullScreen()
+        # self.showFullScreen()
         #全屏
+    def visitorShow(self,visitorList):
+        for index in range(len(visitorList)):
 
+            nameLable=QLabel(visitorList(index)["name"])
+            font=QFont("Microsoft YaHei", 20, 75)
+            #字体格式
+            nameLable.setFont(font)
+            self.tabel.setCellWidget(index,1,nameLable)
+
+            tiplable = QLabel(visitorList(index)["name"]+"你好，你的辅导员"+visitorList(index)["teacher"]+"正在等待为你解决问题")
+            font = QFont("Microsoft YaHei", 20, 75)
+            # 字体格式
+            tiplable.setFont(font)
+            self.tabel.setItem(index,2,tiplable)
 
 
 
