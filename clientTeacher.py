@@ -44,22 +44,25 @@ class teacherWindow(window.window):
         #加入1.2.1
         self.gradeList = QTableWidget()
         #1.2.2表格
-        self.buttonList=[]
+
         self.gradeList.setRowCount(15)
         self.gradeList.setColumnCount(3)
         #行列数
-        self.gradeList.setHorizontalHeaderLabels(['班级', '姓名',"详细信息"])
+        self.gradeList.setHorizontalHeaderLabels(['学号', '姓名',"详细信息"])
         #表格字段
         self.gradeList.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.gradeList.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
+
+        self.buttonList = []
+        self.funcList=[]
+
         for i in range(15):
             button=QPushButton("显示")
             button.setDown(True)
             button.setStyleSheet('QPushButton{margin:5px}')
             button.setEnabled(False)
             self.buttonList.append(button)
-            # button.setFixedHeight(30)
-            # button.setFixedWidth(90)
+            self.funcList.append(self.makeFunc(i))
             self.gradeList.setCellWidget(i,2,button)
         #水平竖直自适应延申
         gradeListLayout.addWidget(self.gradeList)
@@ -184,20 +187,25 @@ class teacherWindow(window.window):
 
 
     def visitorShow(self,visitorList):
+        self.visitorList=visitorList
+        #便于传参
         for index in range(len(visitorList)):
-            self.gradeList.setItem(index,0,QTableWidgetItem(visitorList[index]["num"]))
-            self.gradeList.setItem(index,1,QTableWidgetItem(visitorList[index]["name"]))
+            #列表显示
+            self.gradeList.setItem(index,0,QTableWidgetItem(str(visitorList[index]["num"])))
+            #self.gradeList.setItem(index,1,QTableWidgetItem(visitorList[index]["inclass"]))
             self.buttonList[index].setEnabled(True)
-        self.buttonList[0].clicked.connect(lambda :self.detailShow(visitorList[0]))
-        self.buttonList[1].clicked.connect(lambda :self.detailShow(visitorList[1]))
+            self.buttonList[index].clicked.connect(self.funcList[index])
+            #不要使用lambda表达式，会延迟函数的执行，导致出错
 
 
-
-    def detailShow(self,studentData):
-        self.name.setText(str(studentData["name"]))
-        self.num.setText(str(studentData["num"]))
-        #self.inclass.setText(studentData["inclass"])
-        # self.major.setPlainText(studentData["major"])
-        # self.year.setPlainText(studentData["year"])
-        # self.id.setPlainText(studentData["id"])
-        # self.otherData.setItem(0,0,studentData[""])
+    def makeFunc(self,index):
+        def detailShow():
+            studentData=self.visitorList[index]
+            #self.name.setText(str(studentData["name"]))
+            self.num.setText(str(studentData["num"]))
+            # self.inclass.setText(studentData["inclass"])
+            # self.major.setPlainText(studentData["major"])
+            # self.year.setPlainText(studentData["year"])
+            # self.id.setPlainText(studentData["id"])
+            # self.otherData.setItem(0,0,studentData[""])
+        return detailShow
