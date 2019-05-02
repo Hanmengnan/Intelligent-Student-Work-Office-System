@@ -3,12 +3,11 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap, QPalette
 from PyQt5.QtWidgets import *
 
-import window
+from window import *
 
-
-class teacherWindow(window.window):
+class teacherWindow(window):
     def __init__(self, width=1366, height=768):
-        window.window.__init__(self, width, height)
+        window.__init__(self, width, height)
         clientTeacherLayout=QHBoxLayout()
         #1总布局
         studentDataLayout=self.studentData()
@@ -94,7 +93,7 @@ class teacherWindow(window.window):
 
         img = QLabel()
         #1.1.2.1学生照片
-        per = QPixmap('per.jpg')
+        per = QPixmap('./img/per.jpg')
         img.setPixmap(per)
         studentDataLayoutUp.addWidget(img)
         studentDataLayoutUp.addStretch()
@@ -187,12 +186,16 @@ class teacherWindow(window.window):
 
 
     def visitorShow(self,visitorList):
+        print(visitorList)
         self.visitorList=visitorList
         #便于传参
+        for index in range(15):
+            self.gradeList.setItem(index,0,QTableWidgetItem(""))
+            self.gradeList.setItem(index,1,QTableWidgetItem(""))
         for index in range(len(visitorList)):
             #列表显示
             self.gradeList.setItem(index,0,QTableWidgetItem(str(visitorList[index]["num"])))
-            #self.gradeList.setItem(index,1,QTableWidgetItem(visitorList[index]["inclass"]))
+            self.gradeList.setItem(index,1,QTableWidgetItem(str(visitorList[index]["name"])))
             self.buttonList[index].setEnabled(True)
             self.buttonList[index].clicked.connect(self.funcList[index])
             #不要使用lambda表达式，会延迟函数的执行，导致出错
@@ -201,7 +204,7 @@ class teacherWindow(window.window):
     def makeFunc(self,index):
         def detailShow():
             studentData=self.visitorList[index]
-            #self.name.setText(str(studentData["name"]))
+            self.name.setText(str(studentData["name"]))
             self.num.setText(str(studentData["num"]))
             # self.inclass.setText(studentData["inclass"])
             # self.major.setPlainText(studentData["major"])

@@ -1,6 +1,7 @@
 import requests
 from PyQt5.QtCore import *
 from apscheduler.schedulers.blocking import BlockingScheduler
+from apscheduler.triggers.interval import IntervalTrigger
 
 
 class thread(QThread):
@@ -12,13 +13,16 @@ class thread(QThread):
 
     def run(self):
         sched = BlockingScheduler()
-        sched.add_job(self.getinfo, 'interval', seconds=1)
+        trigger = IntervalTrigger(seconds=1)
+        sched.add_job(self.getinfo, trigger)
+        # sched.add_job(self.getinfo, 'interval', seconds=1)
         sched.start()
 
     def getinfo(self):
         response = requests.get('http://192.168.1.100:5000').text
-        print(response)
+        print("all time")
         if response == "()":
             pass
         else:
             self.showSignal.emit(response)
+            print("emit")

@@ -1,86 +1,89 @@
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt
 import PyQt5.QtGui
+from PyQt5.QtGui import QFont
+from PyQt5.QtGui import QPalette
+from PyQt5.QtGui import QColor
 
 from window import *
 from PyQt5.QtWidgets import *
-import clock
-class studentWindow(window):
-    def __init__(self):
-        window.__init__(self,width=1366,height=768)
+from clock import *
 
-        clientStudentLayout = clock.QVBoxLayout()
+
+class studentWindow(window):
+    def __init__(self,width=1366, height=768):
+        window.__init__(self,width=1366,height=768)
+        wholepalette = QPalette()
+        wholepalette.setColor(QPalette.Window, QColor(1,28,52))
+        self.setPalette(wholepalette)
+        clientStudentLayout = QVBoxLayout()
         #1总布局
-        teacherDataLayout=clock.QHBoxLayout()
+        teacherDataLayout=QHBoxLayout()
         #1.1上层布局
-        img = clock.QLabel()
-        #1.1.1
-        per = PyQt5.QtGui.QPixmap('per.jpg')
-        img.setPixmap(per)
-        teacherDataLayout.addWidget(img)
+        background1 = QWidget()
+        # 1.1.1.1 最下背景
+        background1.setFixedHeight(450)
+        background1.setFixedWidth(300)
+        background1.setStyleSheet("QWidget{border-image:url(./img/图层 2.png);}")
+
+        background2Layout = QVBoxLayout()
+        #1.1.1.1.2 中层背景
+        background2=QWidget()
+        background2.setFixedHeight(430)
+        background2.setFixedWidth(280)
+        background2.setStyleSheet("QWidget{border-image:url(./img/图层 3.png);}")
+        background2Layout.addWidget(background2)
+        background1.setLayout(background2Layout)
+        teacherDataLayout.addWidget(background1)
         #加入1.1.1
 
-        teacherData=clock.QFormLayout()
+        kuang = QLabel()
         #1.1.2
-        teacherData.setSpacing(105)
-        #字段间距
+        kuang.setFixedWidth(800)
+        kuang.setFixedHeight(650)
+        img = PyQt5.QtGui.QPixmap('./img/框.png')
+        kuang.setPixmap(img)
+        teacherDataLayout.addWidget(kuang)
 
-        palettenew = PyQt5.QtGui.QPalette()
-        palettenew.setColor(PyQt5.QtGui.QPalette.Window, clock.clock.Qt.darkCyan)
-        #便签背景颜色
+        dataLayout=QVBoxLayout()
+        xian = QLabel()
+        #1.1.3
+        xian.setFixedHeight(650)
+        img = PyQt5.QtGui.QPixmap('./img/线.png')
+        xian.setPixmap(img)
+        teacherDataLayout.addWidget(xian)
 
-        namelable = clock.QLabel("教师名称：")
-        namelable.setAutoFillBackground(True)
-        namelable.setFixedWidth(200)
-        namelable.setFrameShape(QtWidgets.QFrame.Box)
-        namelable.setPalette(palettenew)
-        #字段：教师名称
-        tellabel = clock.QLabel("Tel：")
-        tellabel.setAutoFillBackground(True)
-        tellabel.setFixedWidth(200)
-        tellabel.setFrameShape(QtWidgets.QFrame.Box)
-        tellabel.setPalette(palettenew)
-        #字段：
-        emaillabel = clock.QLabel("E-mail：")
-        emaillabel.setAutoFillBackground(True)
-        emaillabel.setFixedWidth(200)
-        emaillabel.setFrameShape(QtWidgets.QFrame.Box)
-        emaillabel.setPalette(palettenew)
-        #字段：
-        tel = clock.QLineEdit()
-        tel.setReadOnly(True)
-        tel.setFixedWidth(200)
-        name = clock.QLineEdit()
-        name.setReadOnly(True)
-        name.setFixedWidth(200)
-        email = clock.QLineEdit()
-        email.setReadOnly(True)
-        email.setFixedWidth(200)
-
-        teacherData.addRow(namelable,name)
-        teacherData.addRow(tellabel,tel)
-        teacherData.addRow(emaillabel,email)
-        #栅格布局加入控件
-        teacherDataLayout.addLayout(teacherData)
-        #加入1.1.2
-        timer=clock.MyTimer()
-        timer.setFixedHeight(100)
-        timer.setFixedWidth(400)
-        teacherDataLayout.addWidget(timer)
-        #加入1.1.3
         clientStudentLayout.addLayout(teacherDataLayout)
-        # 加入1.1
-        teacherWordLable = clock.QLabel("""老师寄语：
-        你爱惜你的生命，从不浪费时间，因为你知道：时间就是塑造生命的材料。
-        祝你们好好学习！天天进步！快乐成长！""")
+        # # 加入1.1
 
-        teacherWordLable.setFixedWidth(1365)
-        teacherWordLable.setFixedHeight(500)
-        font=clock.QFont("Microsoft YaHei", 20, 75)
-        #字体格式
-        teacherWordLable.setFont(font)
-        #1.2下层标签
-        clientStudentLayout.addWidget(teacherWordLable)
+
+
+
+
+        titleLayout=QHBoxLayout()
+        #1.2
+        titleRightImg = QLabel()
+        titleRightImg.setFixedWidth(405)
+        # 1.2.1
+        img = PyQt5.QtGui.QPixmap('./img/图层 4.2.png')
+        titleRightImg.setPixmap(img)
+        titleLayout.addWidget(titleRightImg)
+        #加入1.2.1
+
+        titleImg = QLabel()
+        # 1.2.2
+        img = PyQt5.QtGui.QPixmap('./img/信息学院智能学工.png')
+        titleImg.setPixmap(img)
+        titleLayout.addWidget(titleImg)
+        #加入1.2.2
+        titleLeftImg = QLabel()
+        #1.2.3
+        titleLeftImg.setFixedWidth(405)
+        img = PyQt5.QtGui.QPixmap('./img/图层 4.1.png')
+        titleLeftImg.setPixmap(img)
+        titleLayout.addWidget(titleLeftImg)
+        #加入1.2.3
+        clientStudentLayout.addLayout(titleLayout)
         #加入1.2
         self.setLayout(clientStudentLayout)
         #设置总布局
