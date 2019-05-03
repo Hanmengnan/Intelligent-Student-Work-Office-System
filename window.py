@@ -14,4 +14,4 @@ class window(QWidget):
         frame.moveCenter(center)
         self.move(frame.topLeft())
         self.setWindowTitle("信息学院学工办终端")
-        self.setWindowIcon(QIcon("./img/icon.jpg"))
+        self.setWindowIcon(QIcon("./doorimg/icon.jpg"))

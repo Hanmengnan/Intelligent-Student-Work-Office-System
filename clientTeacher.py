@@ -1,60 +1,111 @@
-from PyQt5 import QtWidgets
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPixmap, QPalette
+import PyQt5.QtCore
+from PyQt5 import QtCore
+from PyQt5.QtGui import QBrush
+from PyQt5.QtGui import QColor
+from PyQt5.QtGui import QFont
+from PyQt5.QtGui import QPixmap , QPalette
 from PyQt5.QtWidgets import *
-
 from window import *
-
 class teacherWindow(window):
     def __init__(self, width=1366, height=768):
         window.__init__(self, width, height)
+        wholepalette = QPalette()
+        wholepalette.setColor(QPalette.Window, QColor(1, 28, 52))
+        self.setPalette(wholepalette)
         clientTeacherLayout=QHBoxLayout()
-        #1总布局
-        studentDataLayout=self.studentData()
-        #1.1左侧布局
-        clientTeacherLayout.addLayout(studentDataLayout)
-        #加入1.1
-        gradeData=self.gradeData()
-        #1.2右侧布局（表格）
-        clientTeacherLayout.addLayout(gradeData)
-        #加入1.2
-        self.setLayout(clientTeacherLayout)
-        #设置总布局
-        # self.showFullScreen()
-        #全屏
-    def gradeData(self):
-        """
-        右侧布局
-        :return:
-        """
-        gradeListLayout=QVBoxLayout()
-        #1.2右侧布局
-        text = QLabel("学生列表")
-        # 1.2.1右侧布局标题
-        text.setAlignment(Qt.AlignCenter)
-        # 文字居中
-        text.setAutoFillBackground(True)
-        # 实例化
-        palette = QPalette()
-        palette.setColor(QPalette.Window, Qt.darkGray)
-        text.setPalette(palette)
-        # 设置背景
-        gradeListLayout.addWidget(text)
-        #加入1.2.1
-        self.gradeList = QTableWidget()
-        #1.2.2表格
+        studentDataLayout=QVBoxLayout()
 
+        background1 = QWidget()
+        background1.setFixedHeight(390)
+        background1.setStyleSheet('QWidget{border-image:url(./teacherimg/头像区域.png);}')
+        backgroundLayout = QVBoxLayout()
+        background = QWidget()
+        background.setFixedHeight(379)
+        background.setFixedWidth(300)
+        background.setStyleSheet("QWidget{border-image:url(./teacherimg/头像.png);}")
+        backgroundLayout.setAlignment(QtCore.Qt.AlignCenter)
+        backgroundLayout.addWidget(background)
+        background1.setLayout(backgroundLayout)
+
+        studentDataLayout.addWidget(background1)
+        self.data = QWidget()
+        self.data.setAutoFillBackground(True)
+        datapalette = QPalette()
+        datapalette.setBrush(QPalette.Background, QBrush(QPixmap("./teacherimg/信息.png")))
+        self.data.setPalette(datapalette)
+        self.data.setFixedWidth(444)
+        self.data.setFixedHeight(355)
+        dataLayout1=QHBoxLayout()
+        tempLable=QLabel()
+        tempLable.setFixedWidth(130)
+        tempLable.setFixedHeight(350)
+        dataLayout1.addWidget(tempLable)
+        dataLayout2=QVBoxLayout()
+        self.nameLable=QLabel("***")
+        self.nameLable.setFixedHeight(190)
+        self.nameLable.setFont(QFont("微软雅黑", 20, QFont.Bold))
+        self.nameLable.setStyleSheet('color:rgb(207, 214, 218)')
+        dataLayout2.addWidget(self.nameLable)
+        self.classLable = QLabel("*****")
+        self.classLable.setFixedHeight(170)
+        self.classLable.setFont(QFont("微软雅黑", 20, QFont.Bold))
+        self.classLable.setStyleSheet('color:rgb(207, 214, 218)')
+        dataLayout2.addWidget(self.classLable)
+        self.numLable = QLabel("***********")
+        self.numLable.setFixedHeight(140)
+        self.numLable.setFont(QFont("微软雅黑", 20, QFont.Bold))
+        self.numLable.setStyleSheet('color:rgb(207, 214, 218)')
+        dataLayout2.addWidget(self.numLable)
+        self.phoneLable = QLabel("***********")
+        self.phoneLable.setFixedHeight(110)
+        self.phoneLable.setFont(QFont("微软雅黑", 20, QFont.Bold))
+        self.phoneLable.setStyleSheet('color:rgb(207, 214, 218)')
+        dataLayout2.addWidget(self.phoneLable)
+        dataLayout1.addLayout(dataLayout2)
+        self.data.setLayout(dataLayout1)
+        studentDataLayout.addWidget(self.data)
+        clientTeacherLayout.addLayout(studentDataLayout)
+        fenge = QLabel()
+        fenge.setFixedWidth(200)
+        img = PyQt5.QtGui.QPixmap('./teacherimg/分隔.png')
+        fenge.setPixmap(img)
+        clientTeacherLayout.addWidget(fenge)
+        visitorData=self.gradeData()
+        visitorRecord = QWidget()
+        visitorRecord.setStyleSheet("QWidget{border-image:url(./teacherimg/STARS.png);}")
+        visitorRecord.setLayout(visitorData)
+        clientTeacherLayout.addWidget(visitorRecord)
+        self.setLayout(clientTeacherLayout)
+        # self.showFullScreen()
+    def gradeData(self):
+        gradeListLayout=QVBoxLayout()
+        titleLayout = QGridLayout()
+        visitor = QLabel()
+        img = PyQt5.QtGui.QPixmap('./teacherimg/访客记录.png')
+        visitor.setPixmap(img)
+        titleLayout.addWidget(visitor , 0 , 1)
+        name = QLabel()
+        img = PyQt5.QtGui.QPixmap('./teacherimg/姓名.png')
+        name.setPixmap(img)
+        titleLayout.addWidget(name , 1 , 0)
+        time = QLabel()
+        img = PyQt5.QtGui.QPixmap('./teacherimg/时间.png')
+        time.setPixmap(img)
+        titleLayout.addWidget(time , 1 , 1)
+        detail = QLabel()
+        img = PyQt5.QtGui.QPixmap('./teacherimg/详细.png')
+        detail.setPixmap(img)
+        titleLayout.addWidget(detail , 1 , 2)
+        gradeListLayout.addLayout(titleLayout)
+        self.gradeList = QTableWidget()
         self.gradeList.setRowCount(15)
         self.gradeList.setColumnCount(3)
-        #行列数
-        self.gradeList.setHorizontalHeaderLabels(['学号', '姓名',"详细信息"])
-        #表格字段
+        self.gradeList.verticalHeader().setVisible(False)
+        self.gradeList.horizontalHeader().setVisible(False)
         self.gradeList.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.gradeList.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
-
         self.buttonList = []
         self.funcList=[]
-
         for i in range(15):
             button=QPushButton("显示")
             button.setDown(True)
@@ -63,130 +114,10 @@ class teacherWindow(window):
             self.buttonList.append(button)
             self.funcList.append(self.makeFunc(i))
             self.gradeList.setCellWidget(i,2,button)
-        #水平竖直自适应延申
         gradeListLayout.addWidget(self.gradeList)
-        #加入1.2.2
         return gradeListLayout
-    def studentData(self):
-        """
-        左侧布局
-        :return:
-        """
-        studentDataLayout = QVBoxLayout()
-        #1.1左侧布局
-        text = QLabel("个人信息")
-        # 1.1.1左侧标题
-        text.setAlignment(Qt.AlignCenter)
-        # 文字居中
-        text.setAutoFillBackground(True)
-        # 实例化
-        palette = QPalette()
-        palette.setColor(QPalette.Window, Qt.darkGray)
-        text.setPalette(palette)
-        # 设置背景
-        text.setFixedHeight(15)
-        studentDataLayout.addWidget(text)
-        #加入1.1.1
-        studentDataLayoutUp = QHBoxLayout()
-        #1.1.2上方布局
-
-
-        img = QLabel()
-        #1.1.2.1学生照片
-        per = QPixmap('./img/per.jpg')
-        img.setPixmap(per)
-        studentDataLayoutUp.addWidget(img)
-        studentDataLayoutUp.addStretch()
-
-        studentDataList = QFormLayout()
-        #1.1.2.2学生信息布局
-        studentDataList.setSpacing(28)
-        #字段间距
-        palettenew = QPalette()
-        palettenew.setColor(QPalette.Window, Qt.darkCyan)
-        #背景
-        numlabel = QLabel("学号：")
-        numlabel.setAutoFillBackground(True)
-        numlabel.setFixedWidth(200)
-        numlabel.setFrameShape(QtWidgets.QFrame.Box)
-        numlabel.setPalette(palettenew)
-        namelabel = QLabel("姓名：")
-        namelabel.setAutoFillBackground(True)
-        namelabel.setFixedWidth(200)
-        namelabel.setFrameShape(QtWidgets.QFrame.Box)
-        namelabel.setPalette(palettenew)
-        idlabel = QLabel("身份证号：")
-        idlabel.setAutoFillBackground(True)
-        idlabel.setFixedWidth(200)
-        idlabel.setFrameShape(QtWidgets.QFrame.Box)
-        idlabel.setPalette(palettenew)
-        yearlabel = QLabel("入学年份：")
-        yearlabel.setAutoFillBackground(True)
-        yearlabel.setFixedWidth(200)
-        yearlabel.setFrameShape(QtWidgets.QFrame.Box)
-        yearlabel.setPalette(palettenew)
-        inclasslabel = QLabel("班级：")
-        inclasslabel.setAutoFillBackground(True)
-        inclasslabel.setFixedWidth(200)
-        inclasslabel.setFrameShape(QtWidgets.QFrame.Box)
-        inclasslabel.setPalette(palettenew)
-        majorlabel = QLabel("专业：")
-        majorlabel.setAutoFillBackground(True)
-        majorlabel.setFixedWidth(200)
-        majorlabel.setFrameShape(QtWidgets.QFrame.Box)
-        majorlabel.setPalette(palettenew)
-        self.num=QLineEdit()
-        self.num.setReadOnly(True)
-        self.name=QLineEdit()
-        self.name.setReadOnly(True)
-        self.id=QLineEdit()
-        self.id.setReadOnly(True)
-        self.year=QLineEdit()
-        self.year.setReadOnly(True)
-        self.inclass=QLineEdit()
-        self.inclass.setReadOnly(True)
-        self.major=QLineEdit()
-        self.major.setReadOnly(True)
-        studentDataList.addRow(numlabel,self.num)
-        studentDataList.addRow(namelabel, self.name)
-        studentDataList.addRow(idlabel, self.id)
-        studentDataList.addRow(yearlabel, self.year)
-        studentDataList.addRow(inclasslabel, self.inclass)
-        studentDataList.addRow(majorlabel, self.major)
-
-
-        studentDataLayoutUp.addLayout(studentDataList)
-        #加入1.1.2.2
-        studentDataLayout.addLayout(studentDataLayoutUp)
-        #加入1.1.2
-
-        studentDataLayoutDown = QHBoxLayout()
-        # 1.1.3下方布局
-        self.otherData=QTableWidget()
-        #1.1.3.1
-        self.otherData.setRowCount(8)
-        self.otherData.setColumnCount(1)
-        # 行列数
-        self.otherData.setVerticalHeaderLabels(['原学院', '地区', '宿舍楼','宿舍号','性质','手机号','家长电话','家庭住址'])
-        # 表格字段
-        self.otherData.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.otherData.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        # 水平竖直自适应延申
-        self.otherData.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
-        #竖直滚动条
-        self.otherData.horizontalHeader().setVisible(False)
-        # 隐藏列号
-        studentDataLayoutDown.addWidget(self.otherData)
-        #加入1.1.3.1
-        studentDataLayout.addLayout(studentDataLayoutDown)
-        #加入1.1.3
-
-        return  studentDataLayout
-
-
 
     def visitorShow(self,visitorList):
-        print(visitorList)
         self.visitorList=visitorList
         #便于传参
         for index in range(15):
@@ -194,8 +125,8 @@ class teacherWindow(window):
             self.gradeList.setItem(index,1,QTableWidgetItem(""))
         for index in range(len(visitorList)):
             #列表显示
-            self.gradeList.setItem(index,0,QTableWidgetItem(str(visitorList[index]["num"])))
-            self.gradeList.setItem(index,1,QTableWidgetItem(str(visitorList[index]["name"])))
+            self.gradeList.setItem(index,0,QTableWidgetItem(str(visitorList[index]["name"])))
+            self.gradeList.setItem(index,1,QTableWidgetItem(str(visitorList[index]["time"])))
             self.buttonList[index].setEnabled(True)
             self.buttonList[index].clicked.connect(self.funcList[index])
             #不要使用lambda表达式，会延迟函数的执行，导致出错
@@ -204,11 +135,8 @@ class teacherWindow(window):
     def makeFunc(self,index):
         def detailShow():
             studentData=self.visitorList[index]
-            self.name.setText(str(studentData["name"]))
-            self.num.setText(str(studentData["num"]))
-            # self.inclass.setText(studentData["inclass"])
-            # self.major.setPlainText(studentData["major"])
-            # self.year.setPlainText(studentData["year"])
-            # self.id.setPlainText(studentData["id"])
-            # self.otherData.setItem(0,0,studentData[""])
+            self.nameLable.setText(str(studentData["name"]))
+            self.numLable.setText(str(studentData["num"]))
+            self.classLable.setText(studentData["class"])
+            self.phoneLable.setPlainText(studentData["phone"])
         return detailShow

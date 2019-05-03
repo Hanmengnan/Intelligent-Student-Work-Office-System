@@ -1,10 +1,10 @@
 from client import *
-from clientStudent import *
-
+from clientTeacher import *
+from doorClient import *
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     # client=client()
     # client.do()
-    a=studentWindow()
+    a=teacherWindow()
     a.show()
     sys.exit(app.exec_())
