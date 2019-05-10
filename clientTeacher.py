@@ -6,6 +6,25 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtGui import QPixmap , QPalette
 from PyQt5.QtWidgets import *
 from window import *
+
+class perimg(QWidget):
+    def __init__(self):
+        QWidget.__init__(self)
+    def newWidget(self):
+        background=QWidget()
+        background.setFixedHeight(390)
+        background.setFixedWidth(500)
+        background.setStyleSheet('QWidget{border-image:url(./teacherimg/头像区域.png);}')
+        perimgLayout = QVBoxLayout()
+        perimg = QWidget()
+        perimg.setFixedHeight(330)
+        perimg.setFixedWidth(320)
+        perimg.setStyleSheet("QWidget{border-image:url(./teacherimg/头像.png);}")
+        perimgLayout.setAlignment(QtCore.Qt.AlignCenter)
+        perimgLayout.addWidget(perimg)
+        background.setLayout(perimgLayout)
+        return background
+
 class teacherWindow(window):
     def __init__(self, width=1366, height=768):
         window.__init__(self, width, height)
@@ -15,19 +34,7 @@ class teacherWindow(window):
 
         wholeLayout=QHBoxLayout()
         studentDataLayout=QVBoxLayout()
-
-        background = QWidget()
-        background.setFixedHeight(390)
-        background.setStyleSheet('QWidget{border-image:url(./teacherimg/头像区域.png);}')
-        perimgLayout = QVBoxLayout()
-        perimg = QWidget()
-        perimg.setFixedHeight(379)
-        perimg.setFixedWidth(300)
-        perimg.setStyleSheet("QWidget{border-image:url(./teacherimg/头像.png);}")
-        perimgLayout.setAlignment(QtCore.Qt.AlignCenter)
-        perimgLayout.addWidget(perimg)
-        background.setLayout(perimgLayout)
-
+        background = perimg().newWidget()
         studentDataLayout.addWidget(background)
 
         self.data = QWidget()
@@ -128,7 +135,7 @@ class teacherWindow(window):
         for i in range(15):
             button=QPushButton("显示")
             button.setDown(True)
-            button.setStyleSheet('QPushButton{margin:5px}')
+            button.setStyleSheet('QPushButton{color:rgb(67,197,254)}')
             button.setEnabled(False)
             self.buttonList.append(button)
             self.funcList.append(self.makeFunc(i))
@@ -144,8 +151,12 @@ class teacherWindow(window):
             self.visitorTableWidge.setItem(index,1,QTableWidgetItem(""))
         for index in range(len(visitorList)):
             #列表显示
-            self.visitorTableWidge.setItem(index,0,QTableWidgetItem(str(visitorList[index]["name"])))
-            self.visitorTableWidge.setItem(index,1,QTableWidgetItem(str(visitorList[index]["time"])))
+            name=QTableWidgetItem(str(visitorList[index]["name"]))
+            name.setForeground(QBrush(QColor(255 ,255 ,255 )))
+            self.visitorTableWidge.setItem(index,0,name)
+            num = QTableWidgetItem(str(visitorList[index]["num"]))
+            num.setForeground(QBrush(QColor(255 , 255 , 255)))
+            self.visitorTableWidge.setItem(index,1,num)
             self.buttonList[index].setEnabled(True)
             self.buttonList[index].clicked.connect(self.funcList[index])
             #不要使用lambda表达式，会延迟函数的执行，导致出错
@@ -156,6 +167,6 @@ class teacherWindow(window):
             studentData=self.visitorList[index]
             self.nameLable.setText(str(studentData["name"]))
             self.numLable.setText(str(studentData["num"]))
-            self.classLable.setText(studentData["class"])
-            self.phoneLable.setPlainText(studentData["phone"])
+            # self.classLable.setText(studentData["class"])
+            # self.phoneLable.setPlainText(studentData["phone"])
         return detailShow

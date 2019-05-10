@@ -1,13 +1,15 @@
 import PyQt5.QtGui
 from PyQt5.QtCore import Qt
+from PyQt5.QtCore import QRect
 from PyQt5.QtGui import QColor
 from PyQt5.QtGui import QFont
 from PyQt5.QtGui import QPalette
-from clock import *
+from PyQt5.QtWidgets import *
+
 from window import *
 class doorWindow(window):
-    def __init__(self,width=1366, height=768):
-        window.__init__(self,width=1366,height=768)
+    def __init__(self,width=3340, height=1440):
+        window.__init__(self,width=3340,height=1440)
         wholepalette = QPalette()
         wholepalette.setColor(QPalette.Window, QColor(1,28,52))
         self.setPalette(wholepalette)
@@ -43,7 +45,7 @@ class doorWindow(window):
             辅导员 辅 导 员 正在等你""")
             welcomeText.setAlignment(Qt.AlignLeft)
             welcomeText.setGeometry(QRect(330, 220, 200, 70))
-            welcomeText.setFont(QFont("微软雅黑", 20, QFont.Bold))
+            welcomeText.setFont(QFont("微软雅黑", 22, QFont.Bold))
             welcomeText.setStyleSheet('color:rgb(207, 214, 218)')
             welcomeText.setFixedHeight(100)
             welcomeLayout.addWidget(welcomeText)
@@ -72,9 +74,11 @@ class doorWindow(window):
         self.setLayout(wholeLayout)
         self.showFullScreen()
     def visitorShow(self,visitorList):
+        print(visitorList)
         for i in visitorList:
-            text=visitorList["name"]+ "欢迎你，"+"\n辅导员 "+visitorList["teacher"]+" 正在等你"
-            self.lableList[list(visitorList).index(i)].setText(text)
-        teacherName=visitorList["teacher"]
-        img = PyQt5.QtGui.QPixmap('./doorimg/+'+teacherName+'.png')
-        self.kuang.setPixmap(img)
+            i["teacher"]="李伟"
+            text=i["name"]+ "欢迎你，"+"\n\t辅导员 "+i["teacher"]+" 正在等你"
+            self.lableList[visitorList.index(i)].setText(text)
+            # teacherName=visitorList["teacher"]
+            # img = PyQt5.QtGui.QPixmap('./doorimg/+'+teacherName+'.png')
+        # self.kuang.setPixmap(img)

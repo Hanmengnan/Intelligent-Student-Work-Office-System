@@ -1,54 +1,58 @@
-from PyQt5.QtWidgets import *
-import PyQt5.QtCore
+import PyQt5.QtGui
 from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+
+from clientTeacher import perimg
 from window import *
-from doorClient import *
+
+
 class studentWindow(window):
     def __init__(self,width=1366,height=768):
         window.__init__(self,width,height)
-        self.doorWindowLayout=QVBoxLayout()
-        #总布局1
-        self.setLayout(self.doorWindowLayout)
-        # self.tabel=QTableWidget()
-        # #1.1列表
-        # self.tabel.setRowCount(3)
-        # self.tabel.setColumnCount(1)
-        # #四行四列
-        # self.tabel.setHorizontalHeaderLabels(['照片', '姓名', '备注信息'])
-        # #标题字段
-        # self.tabel.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        # #水平自由伸缩
-        # self.tabel.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        # #竖直自由伸缩
-        # self.tabel.verticalHeader().setVisible(False)
-        # #隐藏行号
-        # self.tabel.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeToContents)
-        # #第一列自适应
-        # for i in range(4):
-        #     doorimg=QLabel()
-        #     per=QPixmap('per.jpg')
-        #     doorimg.setPixmap(per)
-        #     self.tabel.setCellWidget(i,0,doorimg)
-        # self.doorWindowLayout.addWidget(self.tabel)
-        # # 加入1.1
-        # self.setLayout(self.doorWindowLayout)
-        # #设置总布局
-        # # self.showFullScreen()
-        # #全屏
+        wholepalette = QPalette()
+        wholepalette.setColor(QPalette.Window , QColor(1 , 28 , 52))
+        self.setPalette(wholepalette)
+        wholeLayout=QHBoxLayout()
+        teacherLayout=QVBoxLayout()
+
+        background=perimg().newWidget()
+        teacherLayout.addWidget(background)
+
+        wordWidget = QWidget()
+
+        wordpalette = QPalette()
+        wordpalette.setBrush(QPalette.Background , QBrush(QPixmap("./studentimg/老师留言.png")))
+
+        wordWidget.setPalette(wordpalette)
+
+        # wordLayout=QHBoxLayout()
+        # word=QLabel("21222222222222222222")
+        #
+        # word.setFont(QFont("微软雅黑", 20, QFont.Bold))
+        # word.setStyleSheet('color:rgb(207, 214, 218)')
+        # wordLayout.addWidget(word)
+        #
+        # wordWidget.setLayout(wordLayout)
+
+        sayLable = QLabel()
+        sayLable.setFixedHeight(700)
+        sayLable.setFixedWidth(700)
+        img = PyQt5.QtGui.QPixmap('./studentimg/老师留言.png')
+        sayLable.setPixmap(img)
+
+        teacherLayout.addWidget(wordWidget)
+        wholeLayout.addLayout(teacherLayout)
+        tempLable = QLabel()
+        tempLable.setFixedHeight(700)
+        img = PyQt5.QtGui.QPixmap('./studentimg/11.png')
+        tempLable.setPixmap(img)
+
+        wholeLayout.addWidget(tempLable)
+        wholeLayout.addWidget(sayLable)
+        self.setLayout(wholeLayout)
+
     def visitorShow(self,visitorList):
-        for index in range(len(visitorList)):
-
-            nameLable=QLabel(visitorList(index)["name"])
-            font=QFont("Microsoft YaHei", 20, 75)
-            #字体格式
-            nameLable.setFont(font)
-            self.tabel.setCellWidget(index,1,nameLable)
-
-            tiplable = QLabel(visitorList(index)["name"]+"你好，你的辅导员"+visitorList(index)["teacher"]+"正在等待为你解决问题")
-            font = QFont("Microsoft YaHei", 20, 75)
-            # 字体格式
-            tiplable.setFont(font)
-            self.tabel.setItem(index,2,tiplable)
+        pass
 
 
 

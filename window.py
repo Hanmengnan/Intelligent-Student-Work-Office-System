@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QWidget
 
 class window(QWidget):
     def __init__(self,width,height):
-        super(window,self).__init__()
+        QWidget.__init__(self)
         self.windowDef(width,height)
     def windowDef(self,width,height):
         self.setGeometry(0,0,width,height)
