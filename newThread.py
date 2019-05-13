@@ -18,8 +18,7 @@ class thread(QThread):
         sched.start()
 
     def getinfo(self):
-        response = requests.get('http://127.0.0.1:5000').text
-        print("2222")
+        response = requests.get('http://10.5.102.59:5000').text
         if response == "()":
             pass
         else:
@@ -32,7 +31,7 @@ class visitorThread(QThread):
     deleteSignal=pyqtSignal()
     def __init__(self):
         super().__init__()
-        self.mytime=180
+        self.mytime=60
     def run(self):
         while True:
             time.sleep(1)

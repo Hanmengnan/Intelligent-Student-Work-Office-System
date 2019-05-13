@@ -1,10 +1,10 @@
 import PyQt5.QtGui
 from PyQt5.QtCore import Qt
-from PyQt5.QtCore import QRect
 from PyQt5.QtGui import QColor
 from PyQt5.QtGui import QFont
 from PyQt5.QtGui import QPalette
 from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
 
 from window import *
 class doorWindow(window):
@@ -15,24 +15,24 @@ class doorWindow(window):
         self.setPalette(wholepalette)
         wholeLayout = QVBoxLayout()
         tempLable = QLabel()
-        tempLable.setFixedHeight(100)
+        #tempLable.setFixedHeight(100)
         wholeLayout.addWidget(tempLable)
         studentDataLayout=QHBoxLayout()
         background = QWidget()
-        background.setFixedHeight(550)
-        background.setFixedWidth(400)
+        background.setFixedHeight(850)
+        background.setFixedWidth(600)
         background.setStyleSheet('QWidget{border-image:url(./doorimg/图层 3.png);}')
         perimgLayout = QVBoxLayout()
         perimg = QWidget()
-        perimg.setFixedHeight(530)
-        perimg.setFixedWidth(380)
+        perimg.setFixedHeight(815)
+        perimg.setFixedWidth(580)
         perimg.setStyleSheet("QWidget{border-image:url(./doorimg/图层 4.png);}")
         perimgLayout.addWidget(perimg)
         background.setLayout(perimgLayout)
         studentDataLayout.addWidget(background)
         self.seat = QLabel()
-        self.seat.setFixedWidth(930)
-        self.seat.setFixedHeight(650)
+        # self.seat.setFixedWidth(930)
+        # self.seat.setFixedHeight(650)
         seatimg = PyQt5.QtGui.QPixmap('./doorimg/框.png')
         self.seat.setPixmap(seatimg)
         studentDataLayout.addWidget(self.seat)
@@ -41,13 +41,12 @@ class doorWindow(window):
         for i in range(3):
             welcomeText=QLabel()
             self.lableList.append(welcomeText)
-            welcomeText.setText("""同 学 欢迎你，
-            辅导员 辅 导 员 正在等你""")
-            welcomeText.setAlignment(Qt.AlignLeft)
+            welcomeText.setText("")
+            welcomeText.setAlignment(Qt.AlignHCenter)
             welcomeText.setGeometry(QRect(330, 220, 200, 70))
-            welcomeText.setFont(QFont("微软雅黑", 22, QFont.Bold))
+            welcomeText.setFont(QFont("微软雅黑", 50, QFont.Bold))
             welcomeText.setStyleSheet('color:rgb(207, 214, 218)')
-            welcomeText.setFixedHeight(100)
+            # welcomeText.setFixedHeight(100)
             welcomeLayout.addWidget(welcomeText)
             line = QLabel()
             lineimg = PyQt5.QtGui.QPixmap('./doorimg/线.png')
@@ -57,28 +56,35 @@ class doorWindow(window):
         wholeLayout.addLayout(studentDataLayout)
         titleLayout=QHBoxLayout()
         titleRightImg = QLabel()
-        titleRightImg.setFixedWidth(405)
-        img = PyQt5.QtGui.QPixmap('./doorimg/图层 4.2.png')
+        #titleRightImg.setFixedWidth(405)
+        img = PyQt5.QtGui.QPixmap('./doorimg/图层 4.4.png')
         titleRightImg.setPixmap(img)
         titleLayout.addWidget(titleRightImg)
         titleImg = QLabel()
         img = PyQt5.QtGui.QPixmap('./doorimg/信息学院智能学工.png')
+        
         titleImg.setPixmap(img)
         titleLayout.addWidget(titleImg)
         titleLeftImg = QLabel()
-        titleLeftImg.setFixedWidth(405)
-        img = PyQt5.QtGui.QPixmap('./doorimg/图层 4.1.png')
+        #titleLeftImg.setFixedWidth(405)
+        img = PyQt5.QtGui.QPixmap('./doorimg/图层 4.3.png')
         titleLeftImg.setPixmap(img)
         titleLayout.addWidget(titleLeftImg)
         wholeLayout.addLayout(titleLayout)
         self.setLayout(wholeLayout)
         self.showFullScreen()
     def visitorShow(self,visitorList):
-        print(visitorList)
-        for i in visitorList:
-            i["teacher"]="李伟"
-            text=i["name"]+ "欢迎你，"+"\n\t辅导员 "+i["teacher"]+" 正在等你"
-            self.lableList[visitorList.index(i)].setText(text)
-            # teacherName=visitorList["teacher"]
-            # img = PyQt5.QtGui.QPixmap('./doorimg/+'+teacherName+'.png')
-        # self.kuang.setPixmap(img)
+        for i in (visitorList):
+            name=""
+            for letter in i["name"]:
+                name+=letter
+                name+=" "
+            i["teacher"]="李 伟 "
+            text=name+ "  欢迎你"+"\n\t辅导员 "+i["teacher"]+" 正在等你"
+            try:
+                self.lableList[visitorList.index(i)].setText(text)
+            except:
+                pass
+    def visitorDelete(self):
+        for i in range(3):
+            self.lableList[i].setText("")
