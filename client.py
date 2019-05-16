@@ -1,40 +1,53 @@
 from newThread import *
-from clientTeacher import *
+from windowTeacher import *
 import sys
-from doorClient import *
-class client:
+from windowDoor import *
+class doorClient:
     data=[]
     def showInfo(self,response):
         self.visitorthread.mytime=60
-        response=response[1:-1].split(',')
-        try:
-            for i in range(1,151,10):
-                num=int(response[i][2:-1])
-                name=response[i+1][2:-1]
-        except:
-            pass
+        print(response)
+        print("1111")
+        self.data = response + self.data
         print(self.data)
-        self.data=[{"name":name,"num":num}]+self.data
         if len(self.data)>3:
-            self.data.pop(3)
-        
-        self.pp.visitorShow(self.data)
+            self.data.pop(-1)
+        self.mywindow.visitorShow(self.data)
 
     def deleteVisitor(self):
-        self.pp.visitorDelete()
+        self.mywindow.visitorDelete()
         self.data=[]
 
     def do(self):
-        app = QApplication(sys.argv)
-        self.pp = doorWindow()
-        self.pp.show()
+        amywindow = QApplication(sys.argv)
+        self.mywindow = doorWindow()
+        self.mywindow.show()
         massagethread=thread()
         massagethread.start()
         massagethread.showSignal.connect(self.showInfo)
         self.visitorthread = visitorThread()
         self.visitorthread.start()
         self.visitorthread.deleteSignal.connect(self.deleteVisitor)
-        sys.exit(app.exec_())
+        sys.exit(amywindow.exec_())
 
 
+class teacherClient(doorClient):
+    def showInfo(self,response):
+        self.visitorthread.mytime = 600
+        print(self.data)
+        self.data = response + self.data
+        if len(self.data) > 15:
+            self.data.pop(-1)
+        self.mywindow.visitorShow(self.data)
+    def do(self):
+        amywindow = QApplication(sys.argv)
+        self.mywindow = teacherWindow()
+        self.mywindow.show()
+        massagethread = thread()
+        massagethread.start()
+        massagethread.showSignal.connect(self.showInfo)
+        self.visitorthread = visitorThread()
+        self.visitorthread.start()
+        self.visitorthread.deleteSignal.connect(self.deleteVisitor)
+        sys.exit(amywindow.exec_())
 

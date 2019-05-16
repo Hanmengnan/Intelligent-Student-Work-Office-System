@@ -2,7 +2,7 @@ import PyQt5.QtGui
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-from clientTeacher import perimg
+from windowTeacher import perimg
 from window import *
 
 

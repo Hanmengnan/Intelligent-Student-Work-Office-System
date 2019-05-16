@@ -151,10 +151,10 @@ class teacherWindow(window):
             self.visitorTableWidge.setItem(index,1,QTableWidgetItem(""))
         for index in range(len(visitorList)):
             #列表显示
-            name=QTableWidgetItem(str(visitorList[index]["name"]))
+            name=QTableWidgetItem(str(visitorList[index]["xm"]))
             name.setForeground(QBrush(QColor(255 ,255 ,255 )))
             self.visitorTableWidge.setItem(index,0,name)
-            num = QTableWidgetItem(str(visitorList[index]["num"]))
+            num = QTableWidgetItem(str(visitorList[index]["xh"]))
             num.setForeground(QBrush(QColor(255 , 255 , 255)))
             self.visitorTableWidge.setItem(index,1,num)
             self.buttonList[index].setEnabled(True)
@@ -165,8 +165,12 @@ class teacherWindow(window):
     def makeFunc(self,index):
         def detailShow():
             studentData=self.visitorList[index]
-            self.nameLable.setText(str(studentData["name"]))
-            self.numLable.setText(str(studentData["num"]))
-            # self.classLable.setText(studentData["class"])
-            # self.phoneLable.setPlainText(studentData["phone"])
+            self.nameLable.setText(str(studentData["xm"]))
+            self.numLable.setText(str(studentData["xh"]))
+            self.classLable.setText(studentData["bj"])
+            self.phoneLable.setText(studentData["ss"])
         return detailShow
+    def visitorDelete(self):
+        for index in range(15):
+            self.visitorTableWidge.setItem(index , 0 , QTableWidgetItem(""))
+            self.visitorTableWidge.setItem(index , 1 , QTableWidgetItem(""))
