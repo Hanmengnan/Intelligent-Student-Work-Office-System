@@ -6,7 +6,7 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtGui import QPixmap , QPalette
 from PyQt5.QtWidgets import *
 from window import *
-
+from settings import *
 class perimg(QWidget):
     def __init__(self):
         QWidget.__init__(self)
@@ -124,7 +124,7 @@ class teacherWindow(window):
         visitorListLayout.addLayout(titleLayout)
 
         self.visitorTableWidge = QTableWidget()
-        self.visitorTableWidge.setRowCount(15)
+        self.visitorTableWidge.setRowCount(TEACHER_VISITOR_ITEM)
         self.visitorTableWidge.setColumnCount(3)
         self.visitorTableWidge.verticalHeader().setVisible(False)
         self.visitorTableWidge.horizontalHeader().setVisible(False)
@@ -132,7 +132,7 @@ class teacherWindow(window):
         self.visitorTableWidge.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.buttonList = []
         self.funcList=[]
-        for i in range(15):
+        for i in range(TEACHER_VISITOR_ITEM):
             button=QPushButton("显示")
             button.setDown(True)
             button.setStyleSheet('QPushButton{color:rgb(67,197,254)}')
@@ -146,7 +146,7 @@ class teacherWindow(window):
     def visitorShow(self,visitorList):
         self.visitorList=visitorList
         #便于传参
-        for index in range(15):
+        for index in range(TEACHER_VISITOR_ITEM):
             self.visitorTableWidge.setItem(index,0,QTableWidgetItem(""))
             self.visitorTableWidge.setItem(index,1,QTableWidgetItem(""))
         for index in range(len(visitorList)):
@@ -171,6 +171,6 @@ class teacherWindow(window):
             self.phoneLable.setText(studentData["ss"])
         return detailShow
     def visitorDelete(self):
-        for index in range(15):
+        for index in range(TEACHER_VISITOR_ITEM):
             self.visitorTableWidge.setItem(index , 0 , QTableWidgetItem(""))
             self.visitorTableWidge.setItem(index , 1 , QTableWidgetItem(""))

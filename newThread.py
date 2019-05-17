@@ -1,9 +1,11 @@
-import requests
+import time
+from settings import *
 from PyQt5.QtCore import *
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.interval import IntervalTrigger
-import time
+
 from database import *
+from settings import *
 
 
 class thread(QThread):
@@ -16,7 +18,7 @@ class thread(QThread):
     def run(self):
         #这东西和线程有什么区别
         sched = BlockingScheduler()
-        trigger = IntervalTrigger(seconds=1)
+        trigger = IntervalTrigger(seconds=PERTIME)
         sched.add_job(self.getinfo, trigger)
         sched.start()
 
@@ -25,18 +27,16 @@ class thread(QThread):
         if response ==[]:
             pass
         else:
-            # response = {"name": response[0][2] , "num": response[0][1]}
             self.showSignal.emit(response)
-            print("emit")
 
 class visitorThread(QThread):
     deleteSignal=pyqtSignal()
     def __init__(self):
         super().__init__()
-        self.mytime=60
+        self.mytime=DOOR_VISITOR_TIME
     def run(self):
         while True:
-            time.sleep(1)
+            time.sleep()
             if self.mytime==0:
                 self.deleteSignal.emit()
             self.mytime-=1
