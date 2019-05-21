@@ -1,12 +1,13 @@
 import PyQt5.QtCore
 from PyQt5 import QtCore
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QBrush
 from PyQt5.QtGui import QColor
 from PyQt5.QtGui import QFont
 from PyQt5.QtGui import QPixmap , QPalette
 from PyQt5.QtWidgets import *
 from window import *
-from settings import *
+
 class perimg(QWidget):
     def __init__(self):
         QWidget.__init__(self)
@@ -28,56 +29,89 @@ class perimg(QWidget):
 class teacherWindow(window):
     def __init__(self, width=1366, height=768):
         window.__init__(self, width, height)
+
         wholepalette = QPalette()
         wholepalette.setColor(QPalette.Window, QColor(1, 28, 52))
         self.setPalette(wholepalette)
-
+        #背景颜色
         wholeLayout=QHBoxLayout()
+
         studentDataLayout=QVBoxLayout()
+
         background = perimg().newWidget()
+
         studentDataLayout.addWidget(background)
 
         self.data = QWidget()
-        self.data.setFixedWidth(444)
-        self.data.setFixedHeight(355)
+        self.data.setFixedWidth(700)
+        self.data.setFixedHeight(400)
+
         self.data.setAutoFillBackground(True)
+
         datapalette = QPalette()
-        datapalette.setBrush(QPalette.Background, QBrush(QPixmap("./teacherimg/信息.png")))
+        datapalette.setBrush(QPalette.Background, QBrush(QPixmap("./teacherimg/信息底图.png")))
         self.data.setPalette(datapalette)
 
-        dataBackgroundLayout=QHBoxLayout()
-        tempLable=QLabel()
-        tempLable.setFixedWidth(130)
-        tempLable.setFixedHeight(350)
-        dataBackgroundLayout.addWidget(tempLable)
+        dataBackgroundLayout=QGridLayout()
 
-        dataLayout=QVBoxLayout()
+        def wordSet(lable):
+            lable.setFont(QFont("微软雅黑", 17, QFont.Bold))
+            lable.setStyleSheet('color:rgb(207, 214, 218)')
 
-        self.nameLable=QLabel("***")
-        self.nameLable.setFixedHeight(190)
-        self.nameLable.setFont(QFont("微软雅黑", 20, QFont.Bold))
-        self.nameLable.setStyleSheet('color:rgb(207, 214, 218)')
-        dataLayout.addWidget(self.nameLable)
+        empty = QLabel("")
+        wordSet(empty)
+        empty.setFixedWidth(100)
+        dataBackgroundLayout.addWidget(empty , 0 ,0 , 1 ,1 )
 
-        self.classLable = QLabel("*****")
-        self.classLable.setFixedHeight(170)
-        self.classLable.setFont(QFont("微软雅黑", 20, QFont.Bold))
-        self.classLable.setStyleSheet('color:rgb(207, 214, 218)')
-        dataLayout.addWidget(self.classLable)
+        self.nameLable=QLabel("韩孟男")
+        wordSet(self.nameLable)
+        dataBackgroundLayout.addWidget(self.nameLable,1,1,1,3)
 
-        self.numLable = QLabel("***********")
-        self.numLable.setFixedHeight(140)
-        self.numLable.setFont(QFont("微软雅黑", 20, QFont.Bold))
-        self.numLable.setStyleSheet('color:rgb(207, 214, 218)')
-        dataLayout.addWidget(self.numLable)
+        empty = QLabel("")
+        empty.setFixedWidth(100)
+        dataBackgroundLayout.addWidget(empty , 1 , 4 , 1 , 1)
 
-        self.phoneLable = QLabel("***********")
-        self.phoneLable.setFixedHeight(110)
-        self.phoneLable.setFont(QFont("微软雅黑", 20, QFont.Bold))
-        self.phoneLable.setStyleSheet('color:rgb(207, 214, 218)')
-        dataLayout.addWidget(self.phoneLable)
+        self.classLable = QLabel("计17-3")
+        wordSet(self.classLable)
+        dataBackgroundLayout.addWidget(self.classLable , 1 , 5 , 1 , 2)
 
-        dataBackgroundLayout.addLayout(dataLayout)
+        self.idnumber = QLabel("17159010325")
+        wordSet(self.idnumber)
+        dataBackgroundLayout.addWidget(self.idnumber,2,1,1,3)
+
+        self.score = QLabel("88.67")
+        wordSet(self.score)
+        dataBackgroundLayout.addWidget(self.score , 2 , 5 , 1 , 2)
+
+        self.phonenumber = QLabel("15042098397")
+        wordSet(self.phonenumber)
+        dataBackgroundLayout.addWidget(self.phonenumber , 3, 1 , 1 , 3)
+
+        empty = QLabel("")
+        empty.setFixedWidth(40)
+        dataBackgroundLayout.addWidget(empty , 3 , 5 , 1 , 1)
+
+        self.parentphonenumber = QLabel("15042098397")
+        wordSet(self.parentphonenumber)
+        dataBackgroundLayout.addWidget(self.parentphonenumber , 3 , 6 , 1 , 3)
+
+        self.province = QLabel("内蒙古")
+        wordSet(self.province)
+        dataBackgroundLayout.addWidget(self.province , 4 , 2 , 1 , 2)
+
+        self.party = QLabel("共青团员")
+        wordSet(self.party)
+        dataBackgroundLayout.addWidget(self.party , 4 , 6 , 1 , 3)
+
+
+        self.address = QLabel("***********")
+        wordSet(self.address)
+        dataBackgroundLayout.addWidget(self.address , 5 , 2, 1 , 7)
+
+        self.other = QLabel("***********")
+        wordSet(self.other)
+        dataBackgroundLayout.addWidget(self.other , 6 , 2 , 1 , 7)
+
         self.data.setLayout(dataBackgroundLayout)
 
         studentDataLayout.addWidget(self.data)
@@ -85,13 +119,11 @@ class teacherWindow(window):
         wholeLayout.addLayout(studentDataLayout)
 
         tempLable = QLabel()
-        tempLable.setFixedWidth(200)
         img = PyQt5.QtGui.QPixmap('./teacherimg/分隔.png')
         tempLable.setPixmap(img)
         wholeLayout.addWidget(tempLable)
 
         visitorData=self.gradeData()
-
         visitorRecord = QWidget()
         visitorRecord.setStyleSheet("QWidget{border-image:url(./teacherimg/STARS.png);}")
         visitorRecord.setLayout(visitorData)
@@ -99,7 +131,11 @@ class teacherWindow(window):
         wholeLayout.addWidget(visitorRecord)
 
         self.setLayout(wholeLayout)
-        # self.showFullScreen()
+
+
+
+
+
     def gradeData(self):
 
         visitorListLayout=QVBoxLayout()
@@ -124,15 +160,17 @@ class teacherWindow(window):
         visitorListLayout.addLayout(titleLayout)
 
         self.visitorTableWidge = QTableWidget()
-        self.visitorTableWidge.setRowCount(TEACHER_VISITOR_ITEM)
+        self.visitorTableWidge.setRowCount(15)
         self.visitorTableWidge.setColumnCount(3)
         self.visitorTableWidge.verticalHeader().setVisible(False)
         self.visitorTableWidge.horizontalHeader().setVisible(False)
         self.visitorTableWidge.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.visitorTableWidge.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
+
         self.buttonList = []
         self.funcList=[]
-        for i in range(TEACHER_VISITOR_ITEM):
+
+        for i in range(15):
             button=QPushButton("显示")
             button.setDown(True)
             button.setStyleSheet('QPushButton{color:rgb(67,197,254)}')
@@ -143,10 +181,13 @@ class teacherWindow(window):
         visitorListLayout.addWidget(self.visitorTableWidge)
         return visitorListLayout
 
+
+
+
     def visitorShow(self,visitorList):
         self.visitorList=visitorList
         #便于传参
-        for index in range(TEACHER_VISITOR_ITEM):
+        for index in range(15):
             self.visitorTableWidge.setItem(index,0,QTableWidgetItem(""))
             self.visitorTableWidge.setItem(index,1,QTableWidgetItem(""))
         for index in range(len(visitorList)):
@@ -171,6 +212,6 @@ class teacherWindow(window):
             self.phoneLable.setText(studentData["ss"])
         return detailShow
     def visitorDelete(self):
-        for index in range(TEACHER_VISITOR_ITEM):
+        for index in range(15):
             self.visitorTableWidge.setItem(index , 0 , QTableWidgetItem(""))
             self.visitorTableWidge.setItem(index , 1 , QTableWidgetItem(""))

@@ -2,13 +2,12 @@ from newThread import *
 from windowTeacher import *
 import sys
 from windowDoor import *
-from settings import *
 class doorClient:
     data=[]
     def showInfo(self,response):
-        self.visitorthread.mytime=DOOR_VISITOR_TIME
+        self.visitorthread.mytime=60
         self.data = response + self.data
-        if len(self.data)>DOOR_VISITOR_ITEM:
+        if len(self.data)>3:
             self.data.pop(-1)
         self.mywindow.visitorShow(self.data)
 
@@ -31,10 +30,10 @@ class doorClient:
 
 class teacherClient(doorClient):
     def showInfo(self,response):
-        self.visitorthread.mytime = TEACHER_VISITOR_TIME
+        self.visitorthread.mytime = 600
         print(self.data)
         self.data = response + self.data
-        if len(self.data) > TEACHER_VISITOR_ITEM:
+        if len(self.data) > 15:
             self.data.pop(-1)
         self.mywindow.visitorShow(self.data)
     def do(self):

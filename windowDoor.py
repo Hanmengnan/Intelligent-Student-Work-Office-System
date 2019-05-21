@@ -7,7 +7,6 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 
 from window import *
-from settings import *
 class doorWindow(window):
     def __init__(self,width=3340, height=1440):
         window.__init__(self,width=3340,height=1440)
@@ -16,6 +15,7 @@ class doorWindow(window):
         self.setPalette(wholepalette)
         wholeLayout = QVBoxLayout()
         tempLable = QLabel()
+        #tempLable.setFixedHeight(100)
         wholeLayout.addWidget(tempLable)
         studentDataLayout=QHBoxLayout()
         background = QWidget()
@@ -31,12 +31,14 @@ class doorWindow(window):
         background.setLayout(perimgLayout)
         studentDataLayout.addWidget(background)
         self.seat = QLabel()
+        # self.seat.setFixedWidth(930)
+        # self.seat.setFixedHeight(650)
         seatimg = PyQt5.QtGui.QPixmap('./doorimg/框.png')
         self.seat.setPixmap(seatimg)
         studentDataLayout.addWidget(self.seat)
         welcomeLayout=QVBoxLayout()
         self.lableList=[]
-        for i in range(DOOR_VISITOR_ITEM):
+        for i in range(3):
             welcomeText=QLabel()
             self.lableList.append(welcomeText)
             welcomeText.setText("")
@@ -44,6 +46,7 @@ class doorWindow(window):
             welcomeText.setGeometry(QRect(330, 220, 200, 70))
             welcomeText.setFont(QFont("微软雅黑", 50, QFont.Bold))
             welcomeText.setStyleSheet('color:rgb(207, 214, 218)')
+            # welcomeText.setFixedHeight(100)
             welcomeLayout.addWidget(welcomeText)
             line = QLabel()
             lineimg = PyQt5.QtGui.QPixmap('./doorimg/线.png')
@@ -53,6 +56,7 @@ class doorWindow(window):
         wholeLayout.addLayout(studentDataLayout)
         titleLayout=QHBoxLayout()
         titleRightImg = QLabel()
+        #titleRightImg.setFixedWidth(405)
         img = PyQt5.QtGui.QPixmap('./doorimg/图层 4.4.png')
         titleRightImg.setPixmap(img)
         titleLayout.addWidget(titleRightImg)
@@ -62,6 +66,7 @@ class doorWindow(window):
         titleImg.setPixmap(img)
         titleLayout.addWidget(titleImg)
         titleLeftImg = QLabel()
+        #titleLeftImg.setFixedWidth(405)
         img = PyQt5.QtGui.QPixmap('./doorimg/图层 4.3.png')
         titleLeftImg.setPixmap(img)
         titleLayout.addWidget(titleLeftImg)
@@ -81,5 +86,5 @@ class doorWindow(window):
             except:
                 pass
     def visitorDelete(self):
-        for i in range(DOOR_VISITOR_ITEM):
+        for i in range(3):
             self.lableList[i].setText("")
