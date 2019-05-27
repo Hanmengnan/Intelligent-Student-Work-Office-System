@@ -30,7 +30,7 @@ class doorClient:
 
 class teacherClient(doorClient):
     def showInfo(self,response):
-        self.visitorthread.mytime = 600
+        self.visitorthread.mytime = 300
         print(self.data)
         self.data = response + self.data
         if len(self.data) > 15:

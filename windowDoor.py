@@ -88,3 +88,6 @@ class doorWindow(window):
     def visitorDelete(self):
         for i in range(3):
             self.lableList[i].setText("")
+
+
+
