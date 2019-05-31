@@ -30,12 +30,7 @@ class doorClient:
 
 class teacherClient(doorClient):
     def showInfo(self,response):
-        self.visitorthread.mytime = 300
-        print(self.data)
-        self.data = response + self.data
-        if len(self.data) > 15:
-            self.data.pop(-1)
-        self.mywindow.visitorShow(self.data)
+        self.mywindow.mainPageShow()
     def do(self):
         amywindow = QApplication(sys.argv)
         self.mywindow = teacherWindow()
@@ -43,8 +38,6 @@ class teacherClient(doorClient):
         massagethread = thread()
         massagethread.start()
         massagethread.showSignal.connect(self.showInfo)
-        self.visitorthread = visitorThread()
-        self.visitorthread.start()
-        self.visitorthread.deleteSignal.connect(self.deleteVisitor)
+
         sys.exit(amywindow.exec_())
 

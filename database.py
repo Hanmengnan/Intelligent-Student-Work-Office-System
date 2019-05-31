@@ -26,7 +26,7 @@ def visitor():
         for item in tm:
             xh=item[1]
             time=item[2]
-            sql=f'select * from tt where 学号={xh}'
+            sql=f'select * from ttt where 学号={xh}'
             cursor.execute(sql)
             it_result=cursor.fetchone()
             if(it_result):
@@ -45,6 +45,33 @@ def tableVisitor():
     list = cursor.fetchone()
     cursor.close()
     return list
+def change_page(index):
+    db = pymysql.connect(host="192.168.1.100", user="root", password="admin", database="test-zzx")
+    cursor = db.cursor()
+    sql = f'select * from record ORDER BY ID desc limit {(index-1)*12},{index*12}'
+    cursor.execute(sql)
+    list = cursor.fetchall()
+    f=open("./grade.txt","r")
+    g=f.read()
+    grade=g[-2:]
+    for item in list:
+        nj=item[1][:2]
+        if grade=="全部"or nj ==grade:
+            pass
+        else:
+            list.pop(item)
+    cursor.close()
+    return list
+def dataCount():
+    db = pymysql.connect(host="192.168.1.100", user="root", password="admin", database="test-zzx")
+    cursor = db.cursor()
+    sql = f'select * from record'
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    cursor.close()
+    return len(result)
+
+
 def detail(name):
     global current_id
     db = pymysql.connect(host="192.168.1.100", user="root", password="admin", database="test-zzx")

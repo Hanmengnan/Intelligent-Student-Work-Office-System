@@ -2,7 +2,7 @@ import PyQt5.QtGui
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-from windowTeacher import perimg
+from windowTeacher import teacherWindow
 from window import *
 
 
@@ -15,7 +15,7 @@ class studentWindow(window):
         wholeLayout=QHBoxLayout()
         teacherLayout=QVBoxLayout()
 
-        background=perimg().newWidget()
+        background=teacherWindow().studentImgGround()
         teacherLayout.addWidget(background)
 
         wordWidget = QWidget()
@@ -25,14 +25,7 @@ class studentWindow(window):
 
         wordWidget.setPalette(wordpalette)
 
-        # wordLayout=QHBoxLayout()
-        # word=QLabel("21222222222222222222")
-        #
-        # word.setFont(QFont("微软雅黑", 20, QFont.Bold))
-        # word.setStyleSheet('color:rgb(207, 214, 218)')
-        # wordLayout.addWidget(word)
-        #
-        # wordWidget.setLayout(wordLayout)
+
 
         sayLable = QLabel()
         sayLable.setFixedHeight(700)
