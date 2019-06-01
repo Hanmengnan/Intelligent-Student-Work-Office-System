@@ -30,7 +30,6 @@ class loginWinodw(QWidget):
         button.setStyleSheet(buttonStyle)
         button.clicked.connect(self.write)
 
-        #button.setStyleSheet(buttonStyle)
         layout.addWidget(self.box)
         layout.addWidget(button)
         self.setLayout(layout)
@@ -74,36 +73,45 @@ class teacherWindow(window):
         #self.mainPageShow()
 
     def studentImgGround(self):
+        """
+        学生头像区域
+        :return:
+        """
         background = QWidget()
         background.setFixedHeight(1000)
         background.setFixedWidth(1200)
         background.setStyleSheet('QWidget{border-image:url(./teacherimg/头像区域.png);}')
-        perimgLayout = QVBoxLayout()
-        perimgLayout.setAlignment(Qt.AlignHCenter)
+        #头像背景区域
         perimg = QWidget()
         perimg.setFixedHeight(600)
         perimg.setFixedWidth(500)
         perimg.setStyleSheet("QWidget{border-image:url(./teacherimg/头像.png);}")
-        perimgLayout.setAlignment(QtCore.Qt.AlignCenter)
+        #头像区域
+        perimgLayout = QVBoxLayout()
+        perimgLayout.setAlignment(Qt.AlignCenter)
         perimgLayout.addWidget(perimg)
+        # 背景布局
         background.setLayout(perimgLayout)
         return background
 
     def studentDataGround(self):
+        """
+        学生详细信息
+        :return:
+        """
         def wordSet(lable):
             lable.setMaximumHeight(50)
             lable.setFont(QFont("微软雅黑", 19, QFont.Bold))
             lable.setStyleSheet('color:rgb(207, 214, 218)')
-
+        #字体设置
         self.data = QWidget()
         self.data.setFixedWidth(1400)
         self.data.setFixedHeight(800)
         self.data.setAutoFillBackground(True)
-
         datapalette = QPalette()
         datapalette.setBrush(QPalette.Background, QBrush(QPixmap("./teacherimg/信息底图.png")))
         self.data.setPalette(datapalette)
-
+        #信息背景
         dataBackgroundLayout=QGridLayout()
 
         empty = QLabel("")
@@ -200,8 +208,6 @@ class teacherWindow(window):
         self.table.horizontalHeader().setVisible(False)
         self.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.table.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.table.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.table.setEditTriggers(QAbstractItemView.NoEditTriggers)
         # 自适应宽度
         for i in range(12):
@@ -214,41 +220,52 @@ class teacherWindow(window):
             button.setFixedHeight(80)
             button.setStyleSheet(buttonStyle)
             button.setEnabled(False)
+
             self.buttonList.append(button)
             self.funcList.append(self.makeFunc(i))
+            #使用这种方式将按钮与函数关联
+
             button_tempLayout.addWidget(button)
             button_tempWidget.setLayout(button_tempLayout)
             self.table.setCellWidget(i, 2, button_tempWidget)
 
         layout = QVBoxLayout()
         layout.addWidget(self.table)
+
         layoutBanner = QHBoxLayout()
+
         tipLable=QLabel("当前页数")
-        # tipLable.setFixedWidth(180)
         tipLable.setStyleSheet(lableStyle)
+
         self.curPage=QLabel("1")
         self.curPage.setFixedWidth(80)
         self.curPage.setStyleSheet(lableStyle)
+
         self.loginBox=loginWinodw()
+
         self.prevButton = QPushButton("前一页")
         self.prevButton.setFixedHeight(55)
         self.prevButton.setFixedWidth(200)
         self.prevButton.setStyleSheet(buttonStyle)
         self.prevButton.clicked.connect(self.__pre_page)
+
         self.backButton = QPushButton("后一页")
         self.backButton.setFixedHeight(55)
         self.backButton.setFixedWidth(200)
         self.backButton.clicked.connect(self.__next_page)
         self.backButton.setStyleSheet(buttonStyle)
+
         layoutBanner.addWidget(tipLable)
 
         layoutBanner.addWidget(self.curPage)
         layoutBanner.addWidget(self.loginBox)
         layoutBanner.addWidget(self.prevButton)
         layoutBanner.addWidget(self.backButton)
+
         widget = QWidget()
         widget.setLayout(layoutBanner)
         widget.setFixedWidth(1200)
+
         layout.addWidget(widget)
         self.control_signal.connect(self.page_controller)
         tableGround.addLayout(layout)
@@ -280,7 +297,8 @@ class teacherWindow(window):
             if total_page == int(signal[1]):
                 return
             self.curPage.setText(str(self.index + 1))
-        self.visitorShow(int(self.curPage.text()))  # 改变表格内容
+        self.visitorShow(int(self.curPage.text()))
+        # 改变表格内容
 
     def getPageCount(self):
         return (dataCount()+11)/12
@@ -309,13 +327,11 @@ class teacherWindow(window):
             self.buttonList[index].setEnabled(True)
             self.buttonList[index].clicked.connect(self.funcList[index])
             #不要使用lambda表达式，会延迟函数的执行，导致出错
-        print("end")
+
     def makeFunc(self,index):
         def detailShow():
             if (self.table.item(index,0)!=None):
                 name=self.table.item(index,0).text()
-                print(name)
-
         return detailShow
 
 
