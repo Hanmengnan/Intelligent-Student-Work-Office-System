@@ -1,7 +1,7 @@
-from newThread import *
-from windowTeacher import *
+from Pad.newThread import *
+from Pad.windowTeacher import *
 import sys
-from windowDoor import *
+from Door.windowDoor import *
 class doorClient:
     data=[]
     def showInfo(self,response):

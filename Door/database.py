@@ -26,7 +26,7 @@ def visitor():
         for item in tm:
             xh=item[1]
             time=item[2]
-            sql=f'select * from ttt where 学号={xh}'
+            sql=f'select * from tt where 学号={xh}'
             cursor.execute(sql)
             it_result=cursor.fetchone()
             if(it_result):
@@ -61,6 +61,7 @@ def change_page(index):
         else:
             list.pop(item)
     cursor.close()
+    print()
     return list
 def dataCount():
     db = pymysql.connect(host="192.168.1.100", user="root", password="admin", database="test-zzx")
@@ -72,12 +73,13 @@ def dataCount():
     return len(result)
 
 
-def detail(name):
+def detail(id):
     global current_id
     db = pymysql.connect(host="192.168.1.100", user="root", password="admin", database="test-zzx")
     teacher = {"2015": "李伟、杨乾振", "2016": "靳现凯", "2017": "刘霁炜", "2018": "杨和佳"}
     cursor = db.cursor()
-    sql = f'select * from tt where 姓名={name}'
+
+    sql = f'select * from tt where 学号={id}'
     cursor.execute(sql)
     it_result = cursor.fetchone()
     if (it_result):
@@ -87,4 +89,4 @@ def detail(name):
                 "ssl": it_result[11], "ss": it_result[12].replace('\n', ''), "sf": it_result[13],
                 "dz": it_result[14], "js": teacher[it_result[1]]}
     db.close()
-    return it_result
+    return data
