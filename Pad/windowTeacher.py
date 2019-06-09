@@ -75,7 +75,7 @@ class teacherWindow(window):
         self.setLayout(wholeLayout)
         self.mainPageShow()
         self.write()
-        self.showFullScreen()
+        #self.showFullScreen()
 
 
     def studentImgGround(self):
@@ -204,26 +204,25 @@ class teacherWindow(window):
         #titleLayout.addWidget(detail , 1 , 2)
         tableGround.addLayout(titleLayout)
 
-        self.table = QTableWidget(12, 4)
+        self.table = QTableWidget(8, 4)
         self.table.setStyleSheet("QTableWidget::item{border:2px solid ; border-color: rgb(39,64,139);font-size:12px}")
         self.table.verticalHeader().setVisible(False)
         self.table.horizontalHeader().setVisible(False)
+        self.table.setSelectionMode(QAbstractItemView.NoSelection)
         self.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.table.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.table.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.table.setEditTriggers(QAbstractItemView.NoEditTriggers)
         # 自适应宽度
-        for i in range(12):
+        for i in range(8):
             button_tempLayout = QVBoxLayout()
             button_tempWidget = QWidget()
             button_tempLayout.setAlignment(Qt.AlignCenter)
             button = QPushButton("显示")
-            # button.setDown(False)
             button.setFixedWidth(180)
-            button.setFixedHeight(40)
+            button.setFixedHeight(70)
             button.setStyleSheet(buttonStyle)
-            # button.setEnabled(False)
             self.buttonList.append(button)
             self.funcList.append(self.makeFunc(i))
             button_tempLayout.addWidget(button)
@@ -320,7 +319,7 @@ class teacherWindow(window):
         self.visitorShow(int(self.curPage.text()))  # 改变表格内容
 
     def getPageCount(self):
-        return (dataCount()+11)/12
+        return (dataCount()+7)/8
     def mainPageShow(self):
         try:
             if self.curPage.text()=="1":
@@ -331,7 +330,7 @@ class teacherWindow(window):
         visitorList=change_page(pageindex)
         print(visitorList)
         #便于传参
-        for index in range(12):
+        for index in range(8):
             self.table.setItem(index,0,QTableWidgetItem(""))
             self.table.setItem(index,1,QTableWidgetItem(""))
 

@@ -46,6 +46,7 @@ def tableVisitor():
     cursor.close()
     return list
 def change_page(index):
+    real_list=[]
     db = pymysql.connect(host="192.168.1.100", user="root", password="admin", database="test-zzx")
     cursor = db.cursor()
     sql = f'select * from record ORDER BY ID desc limit {(index-1)*12},{index*12}'
@@ -54,15 +55,14 @@ def change_page(index):
     f=open("./grade.txt","r")
     g=f.read()
     grade=g[-2:]
-    for item in list:
-        nj=item[1][:2]
-        if grade=="全部"or nj ==grade:
-            pass
-        else:
-            list.pop(item)
+    if grade == "全部":
+        real_list=list
+    else:
+        for item in list:
+            if grade==item[1][:2]:
+                real_list.append(item)
     cursor.close()
-    print()
-    return list
+    return real_list
 def dataCount():
     db = pymysql.connect(host="192.168.1.100", user="root", password="admin", database="test-zzx")
     cursor = db.cursor()
