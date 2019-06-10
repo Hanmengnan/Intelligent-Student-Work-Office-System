@@ -1,7 +1,7 @@
-from Surface.newThread import *
-from Surface.windowTeacher import *
+from newThread import *
+from windowTeacher import *
 import sys
-from Door.windowDoor import *
+#from Door.windowDoor import *
 class doorClient:
     data=[]
     def showInfo(self,response):

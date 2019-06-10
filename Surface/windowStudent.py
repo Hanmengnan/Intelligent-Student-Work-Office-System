@@ -2,8 +2,8 @@ import PyQt5.QtGui
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-from Surface.windowTeacher import teacherWindow
-from Surface.window import *
+from windowTeacher import teacherWindow
+from window import *
 
 
 class studentWindow(window):

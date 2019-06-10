@@ -8,44 +8,19 @@ from PyQt5.QtGui import QColor
 from PyQt5.QtGui import QFont
 from PyQt5.QtGui import QPixmap , QPalette
 from PyQt5.QtWidgets import *
-from Surface.window import *
-from Surface.database import *
+from window import *
+from database import *
 from PyQt5.QtCore import pyqtSignal, Qt
 buttonStyle='QPushButton{background-color:rgb(0,206,209);color: white;border-radius: 18px;  border: 5px groove gray;border-style: outset;}''QPushButton:hover{background-color:rgb(175,238,238); color: black;}''QPushButton:pressed{background-color:rgb(0,191,255);border-style: inset; }'
 lableStyle= 'QLabel{font-size:30px;color: white;  border: 20px groove gray;border-style: outset;}'
 editStyle='QLineEdit{background-color:rgb(0,206,209);font-size:30px;color: white; border-radius: 18px; border: 20px groove gray;border-style: outset;}'
 comboBoxStyle="QComboBox{background-color:rgb(0,206,209);font-family:'微软雅黑';font-size:15; border:1px solid lightgray;}"
-class loginWinodw(QWidget):
-    def __init__(self):
-        QWidget.__init__(self)
-        self.setWindowTitle("请选择学生年级")
-        layout=QHBoxLayout()
-        self.box=QComboBox()
-        self.box.setFixedHeight(55)
-        self.box.setFixedWidth(200)
-        self.box.setStyleSheet(comboBoxStyle)
-        self.box.addItems(["全部","2015","2016","2017","2018"])
-        button=QPushButton("确认")
-        button.setFixedHeight(60)
-        button.setFixedWidth(200)
-        button.setStyleSheet(buttonStyle)
-        button.clicked.connect(self.write)
-
-        #button.setStyleSheet(buttonStyle)
-        layout.addWidget(self.box)
-        layout.addWidget(button)
-        self.setLayout(layout)
-    def write(self):
-        g=self.box.currentText()
-        f=open("./grade.txt","w")
-        f.write(g)
-        f.close()
 class teacherWindow(window):
     control_signal= pyqtSignal(list)
     buttonList = []
     funcList = []
     visitorList=[]
-    def __init__(self, width=2736, height=1824):
+    def __init__(self, width=2160, height=1440):
         window.__init__(self, width, height)
         wholepalette = QPalette()
         wholepalette.setColor(QPalette.Window, QColor(1, 28, 52))
@@ -77,29 +52,29 @@ class teacherWindow(window):
 
     def studentImgGround(self):
         background = QWidget()
-        background.setFixedHeight(1000)
-        background.setFixedWidth(1200)
+        background.setFixedHeight(850)
+        background.setFixedWidth(1000)
         background.setStyleSheet('QWidget{border-image:url(./teacherimg/头像区域.png);}')
         perimgLayout = QVBoxLayout()
         perimgLayout.setAlignment(Qt.AlignHCenter)
-        perimg = QWidget()
-        perimg.setFixedHeight(600)
-        perimg.setFixedWidth(500)
-        perimg.setStyleSheet("QWidget{border-image:url(./teacherimg/头像.png);}")
+        self.perimg = QWidget()
+        self.perimg.setFixedHeight(500)
+        self.perimg.setFixedWidth(400)
+        self.perimg.setStyleSheet("QWidget{border-image:url(./teacherimg/头像.png);}")
         perimgLayout.setAlignment(QtCore.Qt.AlignCenter)
-        perimgLayout.addWidget(perimg)
+        perimgLayout.addWidget(self.perimg)
         background.setLayout(perimgLayout)
         return background
 
     def studentDataGround(self):
         def wordSet(lable):
             lable.setMaximumHeight(50)
-            lable.setFont(QFont("微软雅黑", 19, QFont.Bold))
+            lable.setFont(QFont("微软雅黑", 17, QFont.Bold))
             lable.setStyleSheet('color:rgb(207, 214, 218)')
 
         self.data = QWidget()
-        self.data.setFixedWidth(1400)
-        self.data.setFixedHeight(800)
+        self.data.setFixedWidth(1000)
+        self.data.setFixedHeight(530)
         self.data.setAutoFillBackground(True)
 
         datapalette = QPalette()
@@ -110,7 +85,7 @@ class teacherWindow(window):
 
         empty = QLabel("")
         wordSet(empty)
-        empty.setFixedWidth(200)
+        empty.setFixedWidth(150)
         dataBackgroundLayout.addWidget(empty , 0 ,0 , 1 ,1 )
 
         self.nameLable=QLabel("")
@@ -118,7 +93,7 @@ class teacherWindow(window):
         dataBackgroundLayout.addWidget(self.nameLable,1,1,1,3)
 
         empty = QLabel("")
-        empty.setFixedWidth(220)
+        empty.setFixedWidth(130)
         dataBackgroundLayout.addWidget(empty , 1 , 4 , 1 , 1)
 
         self.classLable = QLabel("")
@@ -193,12 +168,13 @@ class teacherWindow(window):
         img = PyQt5.QtGui.QPixmap('./teacherimg/详细.png')
         detail.setPixmap(img)
         titleLayout.addWidget(detail , 1 , 2)
-        tableGround.addLayout(titleLayout)
+        #tableGround.addLayout(titleLayout)
 
         self.table = QTableWidget(12, 4)
         self.table.setStyleSheet("QTableWidget::item{border:2px solid ; border-color: rgb(39,64,139);font-size:12px}")
         self.table.verticalHeader().setVisible(False)
         self.table.horizontalHeader().setVisible(False)
+        self.table.setSelectionMode(QAbstractItemView.NoSelection)
         self.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.table.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
@@ -229,17 +205,17 @@ class teacherWindow(window):
         # tipLable.setFixedWidth(180)
         tipLable.setStyleSheet(lableStyle)
         self.curPage=QLabel("1")
-        self.curPage.setFixedWidth(80)
+        self.curPage.setFixedWidth(60)
         self.curPage.setStyleSheet(lableStyle)
         self.loginBox=self.loginWindow()
         self.prevButton = QPushButton("前一页")
         self.prevButton.setFixedHeight(55)
-        self.prevButton.setFixedWidth(200)
+        self.prevButton.setFixedWidth(180)
         self.prevButton.setStyleSheet(buttonStyle)
         self.prevButton.clicked.connect(self.__pre_page)
         self.backButton = QPushButton("后一页")
         self.backButton.setFixedHeight(55)
-        self.backButton.setFixedWidth(200)
+        self.backButton.setFixedWidth(180)
         self.backButton.clicked.connect(self.__next_page)
         self.backButton.setStyleSheet(buttonStyle)
         layoutBanner.addWidget(tipLable)
@@ -250,7 +226,7 @@ class teacherWindow(window):
         layoutBanner.addWidget(self.backButton)
         widget = QWidget()
         widget.setLayout(layoutBanner)
-        widget.setFixedWidth(1200)
+        #widget.setFixedWidth(1000)
         layout.addWidget(widget)
         self.control_signal.connect(self.page_controller)
         tableGround.addLayout(layout)
@@ -261,12 +237,12 @@ class teacherWindow(window):
         layout = QHBoxLayout()
         self.box = QComboBox()
         self.box.setFixedHeight(55)
-        self.box.setFixedWidth(200)
+        self.box.setFixedWidth(180)
         self.box.setStyleSheet(comboBoxStyle)
         self.box.addItems(["全部", "2015", "2016", "2017", "2018"])
         button = QPushButton("确认")
         button.setFixedHeight(60)
-        button.setFixedWidth(200)
+        button.setFixedWidth(180)
         button.setStyleSheet(buttonStyle)
         button.clicked.connect(self.write)
         layout.addWidget(self.box)
@@ -324,16 +300,23 @@ class teacherWindow(window):
         for index in range(12):
             self.table.setItem(index,0,QTableWidgetItem(""))
             self.table.setItem(index,1,QTableWidgetItem(""))
-
+        font=QFont()
+        font.setPointSize(12)
         for index in range(len(visitorList)):
             #列表显示
             id = QTableWidgetItem(str(visitorList[index][1]))
+            id.setTextAlignment(Qt.AlignCenter)
+            id.setFont(font)
             id.setForeground(QBrush(QColor(255, 255, 255)))
             self.table.setItem(index, 0,id )
             name=QTableWidgetItem(str(visitorList[index][2]))
+            name.setTextAlignment(Qt.AlignCenter)
+            name.setFont(font)
             name.setForeground(QBrush(QColor(255 ,255 ,255 )))
             self.table.setItem(index,1,name)
             num = QTableWidgetItem(visitorList[index][4].strftime("%Y-%m-%d %H:%M:%S"))
+            num.setTextAlignment(Qt.AlignCenter)
+            num.setFont(font)
             num.setForeground(QBrush(QColor(255 , 255 , 255)))
             self.table.setItem(index,2,num)
             #self.buttonList[index].setEnabled(True)
@@ -344,20 +327,20 @@ class teacherWindow(window):
             if (self.table.item(index,0)!=None):
                 id=self.table.item(index,0).text()
                 data=detail(id)
-                self.nameLable.setText(data["xm"])
-                self.classLable.setText(data["bj"])
-                self.phonenumber.setText(data["dh"])
-                self.idnumber.setText(data["xh"])
-                self.parentphonenumber.setText(data["jzdh"])
-                self.province.setText(data["jg"])
+                if data!=[]:
+                    self.nameLable.setText(data["xm"])
+                    self.classLable.setText(data["bj"])
+                    self.phonenumber.setText(data["dh"])
+                    self.idnumber.setText(data["xh"])
+                    self.parentphonenumber.setText(data["jzdh"])
+                    self.province.setText(data["jg"])
+                    self.address.setText(data["dz"])
+                    # data=search_img(id)
+                    # with open("perimg.png", 'wb') as bmp_file:
+                    #     bmp_file.write(bytearray.fromhex(data))
+                    # self.perimg.setStyleSheet("QWidget{border-image:url(./teacherimg/perimg.png);}")
         return detailShow
 
 
 
-
-if __name__=="__main__":
-    app = QApplication(sys.argv)
-    client = loginWinodw()
-    client.show()
-    sys.exit(app.exec_())
 

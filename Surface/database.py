@@ -1,13 +1,11 @@
-from flask import Flask
+
 import pymysql
 
-app = Flask(__name__)
 current_id=0
-
 def visitor():
     global current_id
     db = pymysql.connect(host="192.168.1.100", user="root", password="admin", database="test-zzx")
-    teacher={"2015":"李伟、杨乾振","2016":"靳现凯","2017":"刘霁炜","2018":"杨和佳"}
+    teacher={"2015":"李伟、杨乾振","2016":"靳现凯","2017":"刘霁炜","2018":"杨和家"}
     cursor = db.cursor()
     sql_max_id = 'select MAX(id) from record'
     cursor.execute(sql_max_id)
@@ -38,7 +36,7 @@ def visitor():
 
 def tableVisitor():
     db = pymysql.connect(host="192.168.1.100", user="root", password="admin", database="test-zzx")
-    teacher = {"2015": "李伟、杨cursor = db.cursor()乾振", "2016": "靳现凯", "2017": "刘霁炜", "2018": "杨和佳"}
+    teacher = {"2015": "李伟、杨cursor = db.cursor()乾振", "2016": "靳现凯", "2017": "刘霁炜", "2018": "杨和家"}
     cursor = db.cursor()
     sql_list = 'select * from record'
     cursor.execute(sql_list)
@@ -46,6 +44,7 @@ def tableVisitor():
     cursor.close()
     return list
 def change_page(index):
+    real_list=[]
     db = pymysql.connect(host="192.168.1.100", user="root", password="admin", database="test-zzx")
     cursor = db.cursor()
     sql = f'select * from record ORDER BY ID desc limit {(index-1)*12},{index*12}'
@@ -54,14 +53,15 @@ def change_page(index):
     f=open("./grade.txt","r")
     g=f.read()
     grade=g[-2:]
-    for item in list:
-        nj=item[1][:2]
-        if grade=="全部"or nj ==grade:
-            pass
-        else:
-            list.pop(item)
+    if grade =="全部":
+        real_list=list
+    else:
+        for item in list:
+            nj=item[1][:2]
+            if nj ==grade:
+                real_list.append(item)
     cursor.close()
-    return list
+    return real_list
 def dataCount():
     db = pymysql.connect(host="192.168.1.100", user="root", password="admin", database="test-zzx")
     cursor = db.cursor()
@@ -75,7 +75,7 @@ def dataCount():
 def detail(id):
     global current_id
     db = pymysql.connect(host="192.168.1.100", user="root", password="admin", database="test-zzx")
-    teacher = {"2015": "李伟、杨乾振", "2016": "靳现凯", "2017": "刘霁炜", "2018": "杨和佳"}
+    teacher = {"2015": "李伟、杨乾振", "2016": "靳现凯", "2017": "刘霁炜", "2018": "杨和家"}
     cursor = db.cursor()
 
     sql = f'select * from tt where 学号={id}'
@@ -87,5 +87,7 @@ def detail(id):
                 "mz": it_result[7], "xz": it_result[8], "dh": it_result[9], "jzdh": it_result[10],
                 "ssl": it_result[11], "ss": it_result[12].replace('\n', ''), "sf": it_result[13],
                 "dz": it_result[14], "js": teacher[it_result[1]]}
+    else:
+        data=[]
     db.close()
     return data
