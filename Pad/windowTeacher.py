@@ -15,31 +15,7 @@ buttonStyle='QPushButton{background-color:rgb(0,206,209);color: white;border-rad
 lableStyle= 'QLabel{font-size:30px;color: white;  border: 20px groove gray;border-style: outset;}'
 editStyle='QLineEdit{background-color:rgb(0,206,209);font-size:30px;color: white; border-radius: 18px; border: 20px groove gray;border-style: outset;}'
 comboBoxStyle="QComboBox{background-color:rgb(0,206,209);font-family:'微软雅黑';font-size:15; border:1px solid lightgray;}"
-class loginWinodw(QWidget):
-    def __init__(self):
-        QWidget.__init__(self)
-        self.setWindowTitle("请选择学生年级")
-        layout=QHBoxLayout()
-        self.box=QComboBox()
-        self.box.setFixedHeight(55)
-        self.box.setFixedWidth(200)
-        self.box.setStyleSheet(comboBoxStyle)
-        self.box.addItems(["全部","2015","2016","2017","2018"])
-        button=QPushButton("确认")
-        button.setFixedHeight(60)
-        button.setFixedWidth(200)
-        button.setStyleSheet(buttonStyle)
-        button.clicked.connect(self.write)
 
-        #button.setStyleSheet(buttonStyle)
-        layout.addWidget(self.box)
-        layout.addWidget(button)
-        self.setLayout(layout)
-    def write(self):
-        g=self.box.currentText()
-        f=open("./grade.txt","w")
-        f.write(g)
-        f.close()
 class teacherWindow(window):
     control_signal= pyqtSignal(list)
     buttonList = []
@@ -75,7 +51,7 @@ class teacherWindow(window):
         self.setLayout(wholeLayout)
         self.mainPageShow()
         self.write()
-        #self.showFullScreen()
+        self.showFullScreen()
 
 
     def studentImgGround(self):
@@ -160,7 +136,6 @@ class teacherWindow(window):
 
         self.address = QLabel("")
         wordSet(self.address)
-        # self.address.setFont(QFont("微软雅黑", 15, QFont.Bold))
         dataBackgroundLayout.addWidget(self.address , 5 , 2, 1 , 7)
 
         self.other = QLabel("")
@@ -334,18 +309,25 @@ class teacherWindow(window):
             self.table.setItem(index,0,QTableWidgetItem(""))
             self.table.setItem(index,1,QTableWidgetItem(""))
 
+        font = QFont()
+        font.setPointSize(12)
         for index in range(len(visitorList)):
-            #列表显示
+            # 列表显示
             id = QTableWidgetItem(str(visitorList[index][1]))
-            id.setForeground(QBrush(QColor(255, 255, 255)))
-            self.table.setItem(index, 0,id )
-            name=QTableWidgetItem(str(visitorList[index][2]))
-            name.setForeground(QBrush(QColor(255 ,255 ,255 )))
-            self.table.setItem(index,1,name)
+            id.setTextAlignment(Qt.AlignCenter)
+            id.setFont(font)
+            id.setForeground(QBrush(QColor(255 , 255 , 255)))
+            self.table.setItem(index , 0 , id)
+            name = QTableWidgetItem(str(visitorList[index][2]))
+            name.setTextAlignment(Qt.AlignCenter)
+            name.setFont(font)
+            name.setForeground(QBrush(QColor(255 , 255 , 255)))
+            self.table.setItem(index , 1 , name)
             num = QTableWidgetItem(visitorList[index][4].strftime("%Y-%m-%d %H:%M:%S"))
+            num.setTextAlignment(Qt.AlignCenter)
+            num.setFont(font)
             num.setForeground(QBrush(QColor(255 , 255 , 255)))
-            self.table.setItem(index,2,num)
-            #self.buttonList[index].setEnabled(True)
+            self.table.setItem(index , 2 , num)
 
             #不要使用lambda表达式，会延迟函数的执行，导致出错
     def makeFunc(self,index):
@@ -353,22 +335,15 @@ class teacherWindow(window):
             if (self.table.item(index,0)!=None):
                 id=self.table.item(index,0).text()
                 data=detail(id)
-                print(data)
-                self.nameLable.setText(data["xm"])
-                self.classLable.setText(data["bj"])
-                self.phonenumber.setText(data["dh"])
-                self.idnumber.setText(data["xh"])
-                self.parentphonenumber.setText(data["jzdh"])
-                self.province.setText(data["jg"])
-                self.address.setText(data["dz"])
+                if data==[]:
+                    self.nameLable.setText(data["xm"])
+                    self.classLable.setText(data["bj"])
+                    self.phonenumber.setText(data["dh"])
+                    self.idnumber.setText(data["xh"])
+                    self.parentphonenumber.setText(data["jzdh"])
+                    self.province.setText(data["jg"])
+                    self.address.setText(data["dz"])
         return detailShow
 
 
-
-
-if __name__=="__main__":
-    app = QApplication(sys.argv)
-    client = loginWinodw()
-    client.show()
-    sys.exit(app.exec_())
 

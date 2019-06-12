@@ -8,8 +8,8 @@ from PyQt5.QtGui import QColor
 from PyQt5.QtGui import QFont
 from PyQt5.QtGui import QPixmap , QPalette
 from PyQt5.QtWidgets import *
-from window import *
-from database import *
+from Surface.window import *
+from Surface.database import *
 from PyQt5.QtCore import pyqtSignal, Qt
 buttonStyle='QPushButton{background-color:rgb(0,206,209);color: white;border-radius: 18px;  border: 5px groove gray;border-style: outset;}''QPushButton:hover{background-color:rgb(175,238,238); color: black;}''QPushButton:pressed{background-color:rgb(0,191,255);border-style: inset; }'
 lableStyle= 'QLabel{font-size:30px;color: white;  border: 20px groove gray;border-style: outset;}'
@@ -226,7 +226,6 @@ class teacherWindow(window):
         layoutBanner.addWidget(self.backButton)
         widget = QWidget()
         widget.setLayout(layoutBanner)
-        #widget.setFixedWidth(1000)
         layout.addWidget(widget)
         self.control_signal.connect(self.page_controller)
         tableGround.addLayout(layout)
@@ -319,7 +318,6 @@ class teacherWindow(window):
             num.setFont(font)
             num.setForeground(QBrush(QColor(255 , 255 , 255)))
             self.table.setItem(index,2,num)
-            #self.buttonList[index].setEnabled(True)
 
             #不要使用lambda表达式，会延迟函数的执行，导致出错
     def makeFunc(self,index):
@@ -335,10 +333,7 @@ class teacherWindow(window):
                     self.parentphonenumber.setText(data["jzdh"])
                     self.province.setText(data["jg"])
                     self.address.setText(data["dz"])
-                    # data=search_img(id)
-                    # with open("perimg.png", 'wb') as bmp_file:
-                    #     bmp_file.write(bytearray.fromhex(data))
-                    # self.perimg.setStyleSheet("QWidget{border-image:url(./teacherimg/perimg.png);}")
+
         return detailShow
 
 
