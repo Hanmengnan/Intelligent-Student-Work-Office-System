@@ -75,7 +75,6 @@ class doorWindow(window):
         self.showFullScreen()
     def visitorShow(self,visitorList):
         for i in (visitorList):
-            print(visitorList)
             name=""
             for letter in i["xm"]:
                 name+=letter
