@@ -25,7 +25,6 @@ class thread(QThread):
         if response ==[]:
             pass
         else:
-            # response = {"name": response[0][2] , "num": response[0][1]}
             self.showSignal.emit(response)
 
 class visitorThread(QThread):

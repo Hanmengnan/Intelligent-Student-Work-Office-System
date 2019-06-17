@@ -1,3 +1,4 @@
+from Door.windowDoor import doorWindow
 from newThread import *
 from windowTeacher import *
 import sys
@@ -31,6 +32,7 @@ class doorClient:
 class teacherClient(doorClient):
     def showInfo(self,response):
         self.mywindow.mainPageShow()
+        self.mywindow.first_show()
     def do(self):
         amywindow = QApplication(sys.argv)
         self.mywindow = teacherWindow()

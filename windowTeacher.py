@@ -330,7 +330,6 @@ class teacherWindow(window):
             if (self.table.item(index,0)!=None):
                 id=self.table.item(index,0).text()
                 data=detail(id)
-                print(data)
                 if data!=[]:
                     self.nameLable.setText(data["xm"])
                     self.classLable.setText(data["bj"])
@@ -346,6 +345,21 @@ class teacherWindow(window):
 
         return detailShow
 
-
+    def first_show(self):
+        if (self.table.item(0 , 0) != None):
+            id = self.table.item(0 , 0).text()
+            data = detail(id)
+            if data != []:
+                self.nameLable.setText(data["xm"])
+                self.classLable.setText(data["bj"])
+                self.phonenumber.setText(data["dh"])
+                self.idnumber.setText(data["xh"])
+                self.parentphonenumber.setText(data["jzdh"])
+                self.province.setText(data["jg"])
+                self.address.setText(data["dz"])
+                if getPhoto(id) == True:
+                    self.perimg.setStyleSheet("QWidget{border-image:url(./photo.jpg);}")
+                else:
+                    self.perimg.setStyleSheet("QWidget{border-image:url(./teacherimg/头像.png);}")
 
 
