@@ -1,6 +1,6 @@
 
 import pymysql
-
+import time
 current_id=0
 def visitor():
     global current_id
@@ -48,14 +48,14 @@ def change_page(index):
     list=[]
     db = pymysql.connect(host="192.168.1.100", user="root", password="admin", database="test-zzx")
     cursor = db.cursor()
-    sql = f'select id from record ORDER BY ID desc limit {(index - 1) * 12},{index * 12}'
+    sql = f'select id from record where name!="" ORDER BY ID desc limit {(index - 1) * 12},{index * 12}'
     cursor.execute(sql)
     id = cursor.fetchall()
+    print(id)
     for item in id :
         sql = f'select * from record where id={item[0]}'
         cursor.execute(sql)
         list.append(cursor.fetchone())
-    print(list)
     f=open("./grade.txt","r")
     g=f.read()
     grade=g[-2:]
@@ -85,15 +85,16 @@ def detail(id):
     teacher = {"2015": "李伟、杨乾振", "2016": "靳现凯", "2017": "刘霁炜", "2018": "杨和家"}
     cursor = db.cursor()
 
-    sql = f'select * from tt where 学号={id}'
+    sql = f'select * from tt where sno={id}'
     cursor.execute(sql)
     it_result = cursor.fetchone()
+    print(it_result)
     if (it_result):
         data = { "xy": it_result[0], "nj": it_result[1], "bj": it_result[2],
                 "xh": it_result[3], "xm": it_result[4], "xb": it_result[5], "jg": it_result[6],
-                "mz": it_result[7], "xz": it_result[8], "dh": it_result[9], "jzdh": it_result[10],
-                "ssl": it_result[11], "ss": it_result[12].replace('\n', ''), "sf": it_result[13],
-                "dz": it_result[14], "js": teacher[it_result[1]]}
+                "mz": it_result[7], "xz": it_result[8], "dh": it_result[12], "jzdh": it_result[13],
+                "ssl": it_result[14], "ss": it_result[15].replace('\n', ''), "sf": it_result[16],
+                "dz": it_result[17], "js": teacher[it_result[1]]}
     return data
 
 def getPhoto(id):
@@ -102,12 +103,15 @@ def getPhoto(id):
     sql=f'select id from ncut_face where StudentId={id}'
     cursor.execute(sql)
     id=cursor.fetchone()[0]
-    sql=f'select *from ncut_face where Id = {id}'
+    sql=f'select Photo from ncut_face where Id = {id}'
+    t1=time.time()
     cursor.execute(sql)
+    t2=time.time()
+    print(t2-t1)
     photo=cursor.fetchone()
     db.close()
-    if photo!= None and photo[4]!=None:
+    if photo!= None and photo[0]!=None:
         with open("photo.jpg" , 'wb') as file:
-            file.write(bytearray.fromhex(photo[4]))
+            file.write(bytearray.fromhex(photo[0]))
         return True
     return False

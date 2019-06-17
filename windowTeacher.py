@@ -330,6 +330,7 @@ class teacherWindow(window):
             if (self.table.item(index,0)!=None):
                 id=self.table.item(index,0).text()
                 data=detail(id)
+                print(data)
                 if data!=[]:
                     self.nameLable.setText(data["xm"])
                     self.classLable.setText(data["bj"])
