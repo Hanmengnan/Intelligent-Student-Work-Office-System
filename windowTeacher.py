@@ -289,7 +289,6 @@ class teacherWindow(window):
                 return
             self.curPage.setText(str(self.index + 1))
         self.visitorShow(int(self.curPage.text()))  # 改变表格内容
-
     def getPageCount(self):
         return (dataCount()+11)/12
     def mainPageShow(self):
@@ -323,12 +322,12 @@ class teacherWindow(window):
             num.setFont(font)
             num.setForeground(QBrush(QColor(255 , 255 , 255)))
             self.table.setItem(index,2,num)
-
-            #不要使用lambda表达式，会延迟函数的执行，导致出错
+        self.first_show()
     def makeFunc(self,index):
         def detailShow():
             if (self.table.item(index,0)!=None):
-                id=self.table.item(index,0).text()
+                self.text = self.table.item(index , 0).text()
+                id= self.text
                 data=detail(id)
                 if data!=[]:
                     self.nameLable.setText(data["xm"])
