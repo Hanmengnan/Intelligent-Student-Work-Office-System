@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import *
 from database import *
 from window import *
 
-buttonStyle='QPushButton{background-color:rgb(0,206,209);color: white;border-radius: 18px;  border: 5px groove gray;border-style: outset;}''QPushButton:hover{background-color:rgb(175,238,238); color: black;}''QPushButton:pressed{background-color:rgb(0,191,255);border-style: inset; }'
+buttonStyle='QPushButton{background-color:rgb(0,206,209);color: white;border-radius: 18px;  border: 5px groove gray;border-style: outset;font: bold 35px;}''QPushButton:hover{background-color:rgb(175,238,238); color: black;}''QPushButton:pressed{background-color:rgb(0,191,255);border-style: inset; }'
 lableStyle= 'QLabel{font-size:30px;color: white;  border: 20px groove gray;border-style: outset;}'
 editStyle='QLineEdit{background-color:rgb(0,206,209);font-size:30px;color: white; border-radius: 18px; border: 20px groove gray;border-style: outset;}'
 comboBoxStyle="QComboBox{background-color:rgb(0,206,209);font-family:'微软雅黑';font-size:15; border:1px solid lightgray;}"
@@ -177,7 +177,7 @@ class teacherWindow(window):
         #tableGround.addLayout(titleLayout)
 
         self.table = QTableWidget(12, 4)
-        self.table.setStyleSheet("QTableWidget::item{border:2px solid ; border-color: rgb(39,64,139);font-size:12px}")
+        self.table.setStyleSheet("QTableWidget::item{border:2px solid ; border-color: rgb(39,64,139);font-size:18px;font-family:黑体 }")
         self.table.verticalHeader().setVisible(False)
         self.table.horizontalHeader().setVisible(False)
         self.table.setSelectionMode(QAbstractItemView.NoSelection)
@@ -303,6 +303,7 @@ class teacherWindow(window):
         for index in range(12):
             self.table.setItem(index,0,QTableWidgetItem(""))
             self.table.setItem(index,1,QTableWidgetItem(""))
+            self.table.setItem(index,2,QTableWidgetItem(""))
         font=QFont()
         font.setPointSize(15)
         for index in range(len(visitorList)):
@@ -322,13 +323,14 @@ class teacherWindow(window):
             num.setFont(font)
             num.setForeground(QBrush(QColor(255 , 255 , 255)))
             self.table.setItem(index,2,num)
-        self.first_show()
+        # self.first_show()
     def makeFunc(self,index):
         def detailShow():
             if (self.table.item(index,0)!=None):
                 self.text = self.table.item(index , 0).text()
                 id= self.text
                 data=detail(id)
+                print(data)
                 if data!=[]:
                     self.nameLable.setText(data["xm"])
                     self.classLable.setText(data["bj"])
@@ -341,6 +343,15 @@ class teacherWindow(window):
                         self.perimg.setStyleSheet("QWidget{border-image:url(./photo.jpg);}")
                     else:
                         self.perimg.setStyleSheet("QWidget{border-image:url(./teacherimg/头像.png);}")
+                else:
+                    self.nameLable.setText("")
+                    self.classLable.setText("")
+                    self.phonenumber.setText("")
+                    self.idnumber.setText("")
+                    self.parentphonenumber.setText("")
+                    self.province.setText("")
+                    self.address.setText("")
+                    self.perimg.setStyleSheet("QWidget{border-image:url(./teacherimg/头像.png);}")
 
         return detailShow
 

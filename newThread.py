@@ -14,7 +14,6 @@ class thread(QThread):
         super().__init__()
 
     def run(self):
-        #这东西和线程有什么区别
         sched = BlockingScheduler()
         trigger = IntervalTrigger(seconds=1)
         sched.add_job(self.getinfo, trigger)

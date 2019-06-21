@@ -61,7 +61,7 @@ def change_page(index):
         else:
             list.pop(item)
     cursor.close()
-    print()
+
     return list
 def dataCount():
     db = pymysql.connect(host="192.168.1.100", user="root", password="admin", database="test-zzx")

@@ -32,6 +32,10 @@ class doorClient:
 class teacherClient(doorClient):
     def showInfo(self,response):
         self.mywindow.mainPageShow()
+
+
+
+
     def do(self):
         amywindow = QApplication(sys.argv)
         self.mywindow = teacherWindow()

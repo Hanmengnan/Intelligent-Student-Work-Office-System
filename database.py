@@ -23,15 +23,19 @@ def visitor():
         tm=cursor.fetchall()
         for item in tm:
             xh=item[1]
-            time=item[2]
-            sql=f'select * from tt where 学号={xh}'
-            cursor.execute(sql)
-            it_result=cursor.fetchone()
-            if(it_result):
-                data={"time":time,"xy":it_result[0],"nj":it_result[1],"bj":it_result[2],"xh":it_result[3],"xm":it_result[4],"xb":it_result[5],"jg":it_result[6],"mz":it_result[7],"xz":it_result[8],"dh":it_result[9],"jzdh":it_result[10],"ssl":it_result[11],"ss":it_result[12].replace('\n',''),"sf":it_result[13],"dz":it_result[14],"js":teacher[it_result[1]]}
-                result.append(data)
+            time=item[4]
+            sql=f'select * from tt where sno ={xh}'
+            try:
+                cursor.execute(sql)
+                it_result=cursor.fetchone()
+                if(it_result):
+                    data={"time":time,"xy":it_result[0],"nj":it_result[1],"bj":it_result[2],"xh":it_result[3],"xm":it_result[4],"xb":it_result[5],"jg":it_result[6],"mz":it_result[7],"xz":it_result[8],"dh":it_result[9],"jzdh":it_result[10],"ssl":it_result[11],"ss":it_result[12].replace('\n',''),"sf":it_result[13],"dz":it_result[14],"js":teacher[it_result[1]]}
+                    result.append(data)
+            except:
+                pass
         current_id=max_id
         db.close()
+
     return result
 
 def tableVisitor():
@@ -51,7 +55,6 @@ def change_page(index):
     sql = f'select id from record where name!="" ORDER BY ID desc limit {(index - 1) * 12},{index * 12}'
     cursor.execute(sql)
     id = cursor.fetchall()
-    print(id)
     for item in id :
         sql = f'select * from record where id={item[0]}'
         cursor.execute(sql)
@@ -107,7 +110,6 @@ def getPhoto(id):
     t1=time.time()
     cursor.execute(sql)
     t2=time.time()
-    print(t2-t1)
     photo=cursor.fetchone()
     db.close()
     if photo!= None and photo[0]!=None:
