@@ -1,37 +1,55 @@
-import requests
-from PyQt5.QtCore import *
+
+import PyQt5.QtCore
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.interval import IntervalTrigger
-import time
+
 from database import *
 
-
-class thread(QThread):
-    emptySignal = pyqtSignal()
-    showSignal = pyqtSignal(list)
+from settings import *
+from database import *
+class usualThread(PyQt5.QtCore.QThread):
+    """
+    通用线程，不断查询数据库的最新数据
+    """
+    showSignal = PyQt5.QtCore.pyqtSignal(tuple)
 
     def __init__(self):
         super().__init__()
 
     def run(self):
+        """
+        定时任务
+        :return:
+        """
         sched = BlockingScheduler()
-        trigger = IntervalTrigger(seconds=1)
+        trigger = IntervalTrigger(seconds=DOOR_CLIENT_SCHEDLUER_TIME)
         sched.add_job(self.getinfo, trigger)
         sched.start()
 
     def getinfo(self):
-        response = visitor()
-        if response ==[]:
-            pass
-        else:
+        """
+        检测是否有新的访客
+        :return:
+        """
+        response = NewestVisitor()
+        if response !=():
+            UpdateLocalRecord(response)
             self.showSignal.emit(response)
 
-class visitorThread(QThread):
-    deleteSignal=pyqtSignal()
+
+class deleteThread(PyQt5.QtCore.QThread):
+    """
+    清空界面线程
+    """
+    deleteSignal=PyQt5.QtCore.pyqtSignal()
     def __init__(self):
         super().__init__()
-        self.mytime=60
+        self.mytime=DOOR_CLIENT_DELETE_TIME
     def run(self):
+        """
+        倒数60秒，时间为0时，清空界面
+        :return:
+        """
         while True:
             time.sleep(1)
             if self.mytime==0:

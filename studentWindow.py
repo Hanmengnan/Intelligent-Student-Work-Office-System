@@ -2,13 +2,12 @@ import PyQt5.QtGui
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-from windowTeacher import teacherWindow
-from window import *
+from teacherWindow import teacherWindow
 
 
-class studentWindow(window):
-    def __init__(self,width=1366,height=768):
-        window.__init__(self,width,height)
+class studentWindow(QWidget):
+    def __init__(self):
+        QWidget.__init__(self)
         wholepalette = QPalette()
         wholepalette.setColor(QPalette.Window , QColor(1 , 28 , 52))
         self.setPalette(wholepalette)
