@@ -45,7 +45,7 @@ def tableVisitor():
     list = cursor.fetchone()
     cursor.close()
     return list
-def change_page(index):
+def ChangePage(index):
     db = pymysql.connect(host="192.168.1.100", user="root", password="admin", database="test-zzx")
     cursor = db.cursor()
     sql = f'select * from record ORDER BY ID desc limit {(index-1)*12},{index*12}'
@@ -63,7 +63,7 @@ def change_page(index):
     cursor.close()
 
     return list
-def dataCount():
+def DataCount():
     db = pymysql.connect(host="192.168.1.100", user="root", password="admin", database="test-zzx")
     cursor = db.cursor()
     sql = f'select * from record'
