@@ -52,22 +52,17 @@ def ChangePage(index):
     f = open("./temp/grade.txt", "r")
     g = f.read()
     grade = g[-2:]
-    print(grade)
     db = sqlite3.connect(database=database)
     cursor = db.cursor()
     if grade == "全部":
         sql = f'select * from record where st_name!="" ORDER BY rowid desc limit {(index - 1) * 12},{index * 12}'
     else:
         grade = grade
-        print(grade)
         sql = f'select * from record where st_name!="" and sno like "%s%%" ORDER BY rowid desc limit {(index - 1) * 12},{index * 12}'%grade
-        print(sql)
     cursor.execute(sql)
-    print("1111")
     list = cursor.fetchall()
     cursor.close()
     db.close()
-    print(list)
     return list
 
 

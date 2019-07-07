@@ -1,12 +1,8 @@
-
 import PyQt5.QtCore
-from apscheduler.schedulers.blocking import BlockingScheduler
-from apscheduler.triggers.interval import IntervalTrigger
-
+import  time
 from database import *
 
-from settings import *
-from database import *
+
 class usualThread(PyQt5.QtCore.QThread):
     """
     通用线程，不断查询数据库的最新数据
@@ -21,11 +17,12 @@ class usualThread(PyQt5.QtCore.QThread):
         定时任务
         :return:
         """
-        sched = BlockingScheduler()
-        trigger = IntervalTrigger(seconds=DOOR_CLIENT_SCHEDLUER_TIME)
-        sched.add_job(self.getinfo, trigger)
-        sched.start()
-
+        while True:
+            try:
+                self.getinfo()
+            except:
+                pass
+            time.sleep(DOOR_CLIENT_SCHEDLUER_TIME)
     def getinfo(self):
         """
         检测是否有新的访客

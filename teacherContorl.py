@@ -35,11 +35,10 @@ class teacherControl(teacherWindow):
         :param signal:
         :return:
         """
-        print("page")
-        print(signal)
+
         TotalPage = self.GetPageCount()
         CurrentPageNum = int(signal[1])
-        print(TotalPage)
+
         if "pre" == signal[0]:
             if 1 == int(signal[1]):
                 return
@@ -48,7 +47,7 @@ class teacherControl(teacherWindow):
             if TotalPage == int(signal[1]):
                 return
             self.PageNum.setText(str(CurrentPageNum + 1))
-        print(CurrentPageNum)
+
         self.ChangePage(int(self.PageNum.text()))  # 改变表格内容
 
     def GetPageCount(self):
@@ -96,7 +95,6 @@ class teacherControl(teacherWindow):
         def DetailShow():
             if (self.TableGround.item(index, 0) is not None):  # 学号不为空
                 StuId = self.TableGround.item(index, 0).text()
-                print(StuId)
                 Data = Detail(StuId)  # 利用学号查询详细信息
                 if Data != []:
                     self.nameLable.setText(Data["xm"])
