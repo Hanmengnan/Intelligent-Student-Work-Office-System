@@ -55,7 +55,7 @@ class teacherControl(teacherWindow):
 
     def MainPageShow(self):
         self.ChangePage(1)
-
+        self.ShowFirstVisitor()
     def ChangePage(self, pageindex):
         try:
             self.VisitorList = ChangePage(pageindex)
@@ -88,7 +88,7 @@ class teacherControl(teacherWindow):
             RecoordItemSet(Time)
             self.TableGround.setItem(index, 2, Time)
 
-
+        self.ShowFirstVisitor()
 
     def makeFunc(self, index):
 
@@ -96,7 +96,7 @@ class teacherControl(teacherWindow):
             if (self.TableGround.item(index, 0) is not None):  # 学号不为空
                 StuId = self.TableGround.item(index, 0).text()
                 Data = Detail(StuId)  # 利用学号查询详细信息
-                if Data != []:
+                if Data != {}:
                     self.nameLable.setText(Data["xm"])
                     self.classLable.setText(Data["bj"])
                     self.phonenumber.setText(Data["dh"])
@@ -112,6 +112,7 @@ class teacherControl(teacherWindow):
                 else:
                     # 查不到信息，全部置空
                     self.DetailSetEmpty()
+                    self.PhotoSetEmpty()
             else:
                 self.DetailSetEmpty()
                 self.PhotoSetEmpty()
@@ -129,6 +130,32 @@ class teacherControl(teacherWindow):
         self.address.setText("")
 
     def PhotoSetEmpty(self):
+
+        print("111")
         self.Photo.setStyleSheet(
             "QWidget{border-image:url(./teacherimg/头像.png);}")
 
+    def ShowFirstVisitor(self):
+        if (self.TableGround.item(0 , 0) is not None):  # 学号不为空
+            StuId = self.TableGround.item(0 , 0).text()
+            Data = Detail(StuId)  # 利用学号查询详细信息
+            if Data != {}:
+                self.nameLable.setText(Data["xm"])
+                self.classLable.setText(Data["bj"])
+                self.phonenumber.setText(Data["dh"])
+                self.idnumber.setText(Data["xh"])
+                self.parentphonenumber.setText(Data["jzdh"])
+                self.province.setText(Data["jg"])
+                self.address.setText(Data["dz"])
+                if GetPhoto(StuId):
+                    self.Photo.setStyleSheet(
+                        TEACHERCLIENT_PHOTOEMPTY_STYLE)
+                else:  # 有信息无照片，照片置空
+                    self.PhotoSetEmpty()
+            else:
+                # 查不到信息，全部置空
+                self.DetailSetEmpty()
+                self.PhotoSetEmpty()
+        else:
+            self.DetailSetEmpty()
+            self.PhotoSetEmpty()

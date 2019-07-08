@@ -7,7 +7,7 @@ class usualThread(PyQt5.QtCore.QThread):
     """
     通用线程，不断查询数据库的最新数据
     """
-    showSignal = PyQt5.QtCore.pyqtSignal(tuple)
+    showSignal = PyQt5.QtCore.pyqtSignal(list)
 
     def __init__(self):
         super().__init__()
@@ -29,7 +29,8 @@ class usualThread(PyQt5.QtCore.QThread):
         :return:
         """
         response = NewestVisitor()
-        if response !=():
+        if response !=[]:
+            print(response)
             UpdateLocalRecord(response)
             self.showSignal.emit(response)
 

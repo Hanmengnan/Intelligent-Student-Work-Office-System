@@ -113,7 +113,7 @@ class teacherWindow(QWidget):
         DataGroundLayout.addWidget(self.nameLable, 1, 1, 1, 3)
 
         empty = QLabel("")
-        empty.setFixedWidth(130)
+        empty.setFixedWidth(220)
         DataGroundLayout.addWidget(empty, 1, 4, 1, 1)
 
         self.classLable = QLabel("")
@@ -139,6 +139,10 @@ class teacherWindow(QWidget):
         self.parentphonenumber.setMaximumHeight(80)
         WordSet(self.parentphonenumber)
         DataGroundLayout.addWidget(self.parentphonenumber, 3, 6, 1, 3)
+
+        empty = QLabel("")
+        empty.setFixedWidth(80)
+        DataGroundLayout.addWidget(empty , 4 , 1 , 1 , 1)
 
         self.province = QLabel("")
         WordSet(self.province)
