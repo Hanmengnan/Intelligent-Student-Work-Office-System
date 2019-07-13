@@ -45,13 +45,15 @@ class teacherControl(teacherWindow):
             self.PageNum.setText(str(CurrentPageNum - 1))
         elif "back" == signal[0]:
             if TotalPage == int(signal[1]):
+                print(TotalPage,int(signal[1]))
+
                 return
             self.PageNum.setText(str(CurrentPageNum + 1))
 
         self.ChangePage(int(self.PageNum.text()))  # 改变表格内容
 
     def GetPageCount(self):
-        return (DataCount() + RECORD_ROWNUM - 1) / RECORD_ROWNUM
+        return (DataCount() + RECORD_ROWNUM - 1) // RECORD_ROWNUM
 
     def MainPageShow(self):
         self.ChangePage(1)
@@ -130,8 +132,6 @@ class teacherControl(teacherWindow):
         self.address.setText("")
 
     def PhotoSetEmpty(self):
-
-        print("111")
         self.Photo.setStyleSheet(
             "QWidget{border-image:url(./teacherimg/头像.png);}")
 

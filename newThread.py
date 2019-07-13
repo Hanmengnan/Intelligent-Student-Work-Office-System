@@ -30,7 +30,6 @@ class usualThread(PyQt5.QtCore.QThread):
         """
         response = NewestVisitor()
         if response !=[]:
-            print(response)
             UpdateLocalRecord(response)
             self.showSignal.emit(response)
 

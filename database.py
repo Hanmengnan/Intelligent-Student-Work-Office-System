@@ -81,15 +81,23 @@ def DataCount():
     查询数据总数，用于计算页数
     :return:
     """
+    file = open("./temp/grade.txt" , "r")
+    g = file.read()
+    grade = g[-2:]  # 年级信息
+
     DataBase = DATABASE_SQLITE_PATH
     db = sqlite3.connect(database=DataBase)
     cursor = db.cursor()
-    sql = f'select MAX(rowid) from record'
+
+    if grade == "全部":
+        sql = f'select * from record'
+    else:
+        sql = f'select * from record where st_name!="" and sno like "%s%%"' % grade
     cursor.execute(sql)
-    result = cursor.fetchone()
+    result = len(cursor.fetchall())
     cursor.close()
     db.close()
-    return int(result[0])#result为元组
+    return int(result)#result为元组
 
 
 def Detail(id):
@@ -107,8 +115,7 @@ def Detail(id):
         cursor.execute(sql)
 
         it_result = cursor.fetchone()
-        print(id)
-        print(it_result)
+
         if (it_result):
             data = {"xy": it_result[0],
                     "nj": it_result[1],
@@ -127,7 +134,6 @@ def Detail(id):
                     "sf": it_result[16],
                     "dz": it_result[17],
                     "js": DATABSE_TEACHER[it_result[1]]}
-    print(data)
     return data
 
 
