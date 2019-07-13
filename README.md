@@ -40,11 +40,11 @@ input：最新的访客列表(list)
  根据学生学号获取照片的16进制字串，写到本地（对图片以16进制字串格式读写没有搞定，故采用此方式）
    
  
- ####newthread.py  
+ #### newthread.py  
  1. usualThread为通用线程用于查询主数据库中是否有新数据插入，用以判断是否有新访客
  2. deleteThread为doorClient使用的线程，在没有访客前来时，倒数时间，清空屏幕  
    
- ####client.py  
+ ### client.py  
     
     
  
@@ -97,5 +97,5 @@ input：最新的访客列表(list)
 ## studentClient
 
 
-##待解决问题
+## 待解决问题
 1.  qt与opencv的并存问题
