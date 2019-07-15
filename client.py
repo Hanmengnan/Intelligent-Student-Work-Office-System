@@ -1,4 +1,4 @@
-import Door.windowDoor
+from doorWindow import  *
 from newThread import *
 
 import sys
@@ -20,14 +20,14 @@ class doorClient:
         self.data = response + self.data
         if len(self.data)>3:#界面最多显示三个来访者
             self.data.pop(-1)#删除最早的来访者
-        self.mywindow.visitorShow(self.data)
+        self.DoorWindow.visitorShow(self.data)
 
     def ResetWindow(self):
         """
         倒计时结束，界面清空函数
         :return:
         """
-        self.mywindow.visitorDelete()#界面清空
+        self.DoorWindow.visitorDelete()#界面清空
         self.data=[]#列表置空
 
     def do(self):
@@ -37,10 +37,10 @@ class doorClient:
         """
         app = QApplication(sys.argv)
 
-        self.DoorWindow = Door.windowDoor.doorWindow()
+        self.DoorWindow = doorWindow()#门口界面
         self.DoorWindow.show()
 
-        MyThread=usualThread()
+        MyThread=usualThread()#查询线程
         MyThread.start()
         MyThread.showSignal.connect(self.ShowInfo)
 
@@ -70,7 +70,7 @@ class teacherClient(doorClient):
         """
         app = QApplication(sys.argv)
 
-        self.ClientWindow = teacherControl()
+        self.ClientWindow = teacherControl()#教师端界面
         self.ClientWindow.show()
 
         MyThread = usualThread()

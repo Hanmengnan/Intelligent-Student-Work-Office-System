@@ -8,7 +8,7 @@
 5. 显示与逻辑分离
 6. 静态文件放在static文件夹，临时文件放在temp文件夹
 7. 压缩包存放背景图片
-8. .db文件为sqlite文件 ，.vsdx文件为流程图使用visio打开，.md文件为思维导图使用xmind打开
+8. .db文件为sqlite文件 ，.vsdx文件为流程图使用visio打开，.xmind文件为思维导图使用xmind打开
 9. 原来的定时执行框架，在我们问题的处理中是个垃圾，弃用
 ## 通用
 ##### database.py
