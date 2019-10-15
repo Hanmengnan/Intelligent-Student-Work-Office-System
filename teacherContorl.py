@@ -3,6 +3,7 @@ from PyQt5.QtCore import Qt
 from teacherWindow import *
 from database import *
 
+import newThread
 class teacherControl(teacherWindow):
     def __init__(self):
         teacherWindow.__init__(self)
@@ -159,3 +160,4 @@ class teacherControl(teacherWindow):
         else:
             self.DetailSetEmpty()
             self.PhotoSetEmpty()
+

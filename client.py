@@ -2,7 +2,7 @@ from doorWindow import  *
 from newThread import *
 
 import sys
-
+import netErrorBox
 from teacherContorl import *
 
 class doorClient:
@@ -35,6 +35,7 @@ class doorClient:
         启动
         :return:
         """
+
         app = QApplication(sys.argv)
 
         self.DoorWindow = doorWindow()#门口界面
@@ -76,6 +77,11 @@ class teacherClient(doorClient):
         MyThread = usualThread()
         MyThread.start()
 
+        netConditionThread = netThread()
+
         MyThread.showSignal.connect(self.ShowInfo)
+        MyThread.netErrorSignal.connect(netErrorBox.netErrorMessageBoxShow)
+        MyThread.netGoodSignal.connect(netErrorBox.netErrorMessageBoxClose)
+
         sys.exit(app.exec_())
 

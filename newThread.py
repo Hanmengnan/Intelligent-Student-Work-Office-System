@@ -3,10 +3,13 @@ import  time
 from database import *
 
 
+
 class usualThread(PyQt5.QtCore.QThread):
     """
     通用线程，不断查询数据库的最新数据
     """
+    netErrorSignal=PyQt5.QtCore.pyqtSignal()
+    netGoodSignal = PyQt5.QtCore.pyqtSignal()
     showSignal = PyQt5.QtCore.pyqtSignal(list)
 
     def __init__(self):
@@ -17,11 +20,17 @@ class usualThread(PyQt5.QtCore.QThread):
         定时任务
         :return:
         """
-        while True:
+        con=False
+        netCondition=True
+        while netCondition:
             try:
                 self.getinfo()
+                if netCondition and not con:
+                    self.netGoodSignal.emit()
+                    con=True
             except:
-                pass
+                netCondition=False
+                self.netErrorSignal.emit()
             time.sleep(DOOR_CLIENT_SCHEDLUER_TIME)
     def getinfo(self):
         """
