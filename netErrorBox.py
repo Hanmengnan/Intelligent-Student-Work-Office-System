@@ -1,4 +1,4 @@
-from PyQt5 import QtCore , QtGui
+from PyQt5 import QtCore , QtGui , Qt
 from PyQt5.QtWidgets import QLabel , QDialog
 
 messageBox=0
@@ -7,7 +7,7 @@ def netErrorMessageBoxShow():
     global messageBox
     messageBox = QDialog()
     lable=QLabel(messageBox)
-    movie = QtGui.QMovie("./static/teacherimg/robot.gif")
+    movie = QtGui.QMovie("./static/teacherimg/g.gif")
     lable.setMovie(movie)
     movie.start()
     messageBox.setFixedHeight(200)
@@ -16,5 +16,9 @@ def netErrorMessageBoxShow():
     messageBox.exec_()
 
 def netErrorMessageBoxClose():
-    global messageBox
-    messageBox.close()
+    try:
+        global messageBox
+        if not messageBox==0:
+            messageBox.close()
+    except:
+        pass

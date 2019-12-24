@@ -46,7 +46,7 @@ class teacherControl(teacherWindow):
             self.PageNum.setText(str(CurrentPageNum - 1))
         elif "back" == signal[0]:
             if TotalPage == int(signal[1]):
-                print(TotalPage,int(signal[1]))
+
 
                 return
             self.PageNum.setText(str(CurrentPageNum + 1))
@@ -78,7 +78,6 @@ class teacherControl(teacherWindow):
             item.setForeground(QBrush(QColor(255, 255, 255)))
             return item
         for index in range(len(self.VisitorList)):
-
             Id = QTableWidgetItem(str(self.VisitorList[index][0]))
             RecoordItemSet(Id)
             self.TableGround.setItem(index, 0, Id)
@@ -90,7 +89,6 @@ class teacherControl(teacherWindow):
             Time = QTableWidgetItem(self.VisitorList[index][2])
             RecoordItemSet(Time)
             self.TableGround.setItem(index, 2, Time)
-
         self.ShowFirstVisitor()
 
     def makeFunc(self, index):
@@ -107,6 +105,7 @@ class teacherControl(teacherWindow):
                     self.parentphonenumber.setText(Data["jzdh"])
                     self.province.setText(Data["jg"])
                     self.address.setText(Data["dz"])
+
                     if GetPhoto(StuId):
                         self.Photo.setStyleSheet(
                         TEACHERCLIENT_PHOTOEMPTY_STYLE)
@@ -137,7 +136,9 @@ class teacherControl(teacherWindow):
             "QWidget{border-image:url(./teacherimg/头像.png);}")
 
     def ShowFirstVisitor(self):
+
         if (self.TableGround.item(0 , 0) is not None):  # 学号不为空
+
             StuId = self.TableGround.item(0 , 0).text()
             Data = Detail(StuId)  # 利用学号查询详细信息
             if Data != {}:

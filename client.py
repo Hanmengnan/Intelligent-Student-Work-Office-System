@@ -77,7 +77,6 @@ class teacherClient(doorClient):
         MyThread = usualThread()
         MyThread.start()
 
-        netConditionThread = netThread()
 
         MyThread.showSignal.connect(self.ShowInfo)
         MyThread.netErrorSignal.connect(netErrorBox.netErrorMessageBoxShow)

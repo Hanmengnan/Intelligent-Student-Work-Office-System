@@ -1,6 +1,5 @@
-DATABSE_TEACHER={"2015": "李伟、杨乾振", "2016": "靳现凯", "2017": "刘霁炜", "2018": "杨和家"}
+DATABSE_TEACHER={"1": "李伟、杨乾振", "2": "靳现凯", "3": "刘霁炜", "0": "杨和家"}
 DATABASE_SQLITE_PATH='static/ncut.db'
-
 DOOR_CLIENT_SCHEDLUER_TIME = 0.1
 DOOR_CLIENT_DELETE_TIME = 60
 
@@ -11,6 +10,7 @@ TEACHERCLIENT_LINEEDIT_STYLE = 'QLineEdit{background-color:rgb(0,206,209);font-s
 TEACHERCLIENT_COMBOBOX_STYLE = "QComboBox{background-color:rgb(0,206,209);font-family:'微软雅黑';font-size:15; border:1px solid lightgray;}"
 TEACHERCLIENT_TABLE_STYLE = "QTableWidget::item{border:2px solid ; border-color: rgb(39,64,139);font-size:18px;font-family:黑体 }"
 TEACHERCLIENT_PHOTO_STYLE = "QWidget{border-image:url(./static/teacherimg/头像.png);}"
+TEACHERCLIENT_PHOTOEMPTY_STYLE = "QWidget{border-image:url(./temp/photo.jpg);}"
 TEACHERCLIENT_PHOTOEMPTY_STYLE = "QWidget{border-image:url(./temp/photo.jpg);}"
 TEACHERCLIENT_PHOTOGROUND_STYLE = 'QWidget{border-image:url(./static/teacherimg/头像区域.png);}'
 TEACHERCLIENT_RECORDGROUND_STYLE = "QWidget{border-image:url(./static/teacherimg/STARS.png);}"

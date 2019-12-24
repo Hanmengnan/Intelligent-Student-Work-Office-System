@@ -20,17 +20,17 @@ class usualThread(PyQt5.QtCore.QThread):
         定时任务
         :return:
         """
-        con=False
         netCondition=True
-        while netCondition:
+        while True:
             try:
                 self.getinfo()
-                if netCondition and not con:
+                if  not netCondition:
                     self.netGoodSignal.emit()
-                    con=True
+                    netCondition=True
             except:
-                netCondition=False
-                self.netErrorSignal.emit()
+                if netCondition:
+                    netCondition=False
+                    self.netErrorSignal.emit()
             time.sleep(DOOR_CLIENT_SCHEDLUER_TIME)
     def getinfo(self):
         """
