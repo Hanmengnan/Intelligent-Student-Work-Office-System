@@ -146,6 +146,8 @@ def Detail(id):
                         "jg": it_result[6] ,
                         "mz": it_result[7] ,
                         "xz": it_result[8] ,
+                        "bz":it_result[9],
+                        "zz":it_result[11],
                         "dh": it_result[12] ,
                         "jzdh": it_result[13] ,
                         "ssl": it_result[14] ,
@@ -155,11 +157,12 @@ def Detail(id):
                         "dz": it_result[17]
                         }
             if "研"in data["bj"]:
-                data["js"]=""
+                data["js"]="王秀菊"
             else:
                 data["js"]= DATABSE_TEACHER[it_result[1] % 4]
         except:
             pass
+    print(data)
     return data
 
 
@@ -173,8 +176,10 @@ def GetPhoto(id):
     db = sqlite3.connect(database=DataBase)
     cursor = db.cursor()
     sql = f'select * from ncut_face where StudentId={id}'
+    print(sql)
     cursor.execute(sql)
     photo = cursor.fetchone()
+    print(len(photo[4]))
     cursor.close()
     db.close()
     if photo is not None and photo[4] is not None:

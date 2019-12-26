@@ -105,7 +105,8 @@ class teacherControl(teacherWindow):
                     self.parentphonenumber.setText(Data["jzdh"])
                     self.province.setText(Data["jg"])
                     self.address.setText(Data["dz"])
-
+                    self.party.setText(Data["zz"])
+                    self.other.setText(Data["bz"])
                     if GetPhoto(StuId):
                         self.Photo.setStyleSheet(
                         TEACHERCLIENT_PHOTOEMPTY_STYLE)
@@ -149,6 +150,7 @@ class teacherControl(teacherWindow):
                 self.parentphonenumber.setText(Data["jzdh"])
                 self.province.setText(Data["jg"])
                 self.address.setText(Data["dz"])
+                # self.party.setText()
                 if GetPhoto(StuId):
                     self.Photo.setStyleSheet(
                         TEACHERCLIENT_PHOTOEMPTY_STYLE)

@@ -276,7 +276,7 @@ class teacherWindow(QWidget):
         self.Combobox.setFixedWidth(TEACHERCLIENT_SCREEN_WIDTH *
                                     TABLE_PRE_OR_BACK_BUTTON_WIDTH_PROPORTION)
         self.Combobox.setStyleSheet(TEACHERCLIENT_COMBOBOX_STYLE)
-        self.Combobox.addItems(["全部", "2015", "2016", "2017", "2018","研究生"])
+        self.Combobox.addItems(["全部", "2016", "2017", "2018", "2019","研究生"])
         return self.Combobox
 
     def ComboboxButtonSet(self):
